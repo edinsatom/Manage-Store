@@ -5,7 +5,7 @@ import { CreateProductComponent } from './components/products/create-product/cre
 import { ProductsComponent } from './components/products/products/products.component';
 import { ProfileComponent } from './components/profile/profile/profile.component';
 
-import { GuardGuard } from './service/guard.guard';
+import { GuardGuard } from './guard/guard.guard';
 
 
 const routes: Routes = [

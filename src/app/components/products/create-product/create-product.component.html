@@ -1,1 +1,143 @@
-<p>create-product works!</p>
+<div class="col text-right mb-3">
+    <button routerLink="/products" type="button" class="btn btn-danger">
+      Cerrar
+    </button>
+  </div>
+  
+  <hr>
+  
+  <div>
+    <form (ngSubmit)='guardar( form )' #form='ngForm' class='container mt-4' novalidate>
+  
+      <div class="form-row">
+        <div class="col-md-9"></div>
+        <div class="form-group col-md-3">
+          <label for='id'>ID</label>
+          <input [ngModel]="producto.id" disabled name='id' type="text" class="form-control" placeholder="ID">
+        </div>
+      </div>
+  
+      <div class="form-row mt-3">
+  
+        <div class="form-row col-md-12">
+          <div class="form-group col-6">
+            <label for='produc to'>Producto</label>
+            <input required [(ngModel)]="producto.nombre" name='nombre' type="text" class="form-control"
+              placeholder="Nombre de Producto">
+            <span 
+            *ngIf="form.submitted && form.controls['nombre'].errors" 
+            class='invalid'>Debe ingresar un nombre de producto</span>
+          </div>
+  
+          <div class="col-1"></div>
+  
+          <div *ngIf="!producto.id" class="form-group col-5">
+            <label for='imagen' >Imagen</label>
+            <input [(ngModel)]="nombreArchivo" name='archivo' class="col" type="file" accept=".jpg, .png" (change)="leerArchivo($event)">
+            <span 
+            *ngIf="form.submitted && errorArchivo.length > 0" 
+            class='invalid'>{{ errorArchivo }} </span>
+          </div>
+  
+        </div>
+  
+        <div class="row no-gutters">
+  
+          <div class="form-group col-12">
+            <label for='caracteristicas'>Características</label>
+            <textarea required [(ngModel)]="producto.caracteristicas" name='caracteristicas' class="form-control"
+              placeholder="Características" rows="5"></textarea>
+              <span 
+            *ngIf="form.submitted && form.controls['caracteristicas'].errors" 
+            class='invalid'>Debe ingresar una descripción del producto</span>
+          </div>
+  
+          <div class="form-row col-md-12">
+            <label for='email'>Correo del fabricante</label>
+            <div class="form-group col-12">
+              <input required email [(ngModel)]="producto.email" name='email' type="email" class="form-control"
+                placeholder="Correo del fabricante">
+                <span 
+            *ngIf="form.submitted && form.controls['email'].errors" 
+            class='invalid'>Debe ingresar un correo del fabricante</span>
+            </div>
+          </div>
+        </div>
+  
+        <div *ngIf="producto.id" class="col-md-3 mx-auto">
+          <label for="">Imagen del producto</label>
+          <!-- <img style="border: 1px solid black;" [src]='producto.imagen.url' class="card-img" [alt]='producto.imagen.url'> -->
+        </div>
+      </div>
+  
+      <div class="form-row mt-3">
+  
+        <div class="form-group col-md-6">
+          <label for='origen'>Pais de origen</label>
+          <select [(ngModel)]="producto.origen" name='origen' class="form-control">
+            <option *ngIf="!producto.id" selected>Pais de fabricación</option>
+            <option *ngIf="producto.id" selected>{{ producto.origen }}</option>
+            <option *ngFor="let pais of paises">{{ pais }}</option>
+          </select>
+          <span 
+            *ngIf="form.submitted && !producto.origen || producto.origen === 'Pais de fabricación'" 
+            class='invalid'>Debe seleccionar un pais de procedencia.</span>
+        </div>
+  
+        <div class="form-group col-md-3 mx-auto">
+          <label for='precio'>Precio</label>
+          <input 
+          #precio
+          [ngModel]="producto.precio"
+          name='precio' 
+          type="number" 
+          class="form-control text-right" 
+          placeholder="Precio">
+          <span 
+            *ngIf="form.submitted && (+producto.precio) < minPrecio" 
+            class='invalid'>El precio mínimo es: {{ minPrecio | currency:'COP':'symbol-narrow': '.0-0' }}</span>
+        </div>
+  
+      </div>
+  
+      <div class="form-row form-group">
+  
+        <div class="col-md-3">
+          <label for='lanzamiento'>F. Lanzamiento</label>
+          <input  
+            required
+          [(ngModel)]="producto.lanzamiento" name='lanzamiento' type="text" class="form-control"
+            placeholder="lanzamiento">
+            <span 
+            *ngIf="form.submitted && form.controls['lanzamiento'].errors" 
+            class='invalid'>Debe ingresar una fecha valida</span>
+        </div>
+  
+        <div class="col-md-3">
+          <label for='vendidas'>Uds. Vendidas</label>
+          <input required [(ngModel)]="producto.vendidas" name='vendidas' type="number" class="form-control text-right"
+            placeholder="U. Vendidas">
+            <span 
+            *ngIf="form.submitted && form.controls['vendidas'].errors || producto.vendidas < 0" 
+            class='invalid'>Debe ingresar una cantidad valida...</span>
+        </div>
+  
+        <div class="col-md-3 mx-auto">
+          <label for='existencia'>Existencia</label>
+          <input required [(ngModel)]="producto.existencia" name='existencia' type="number" class="form-control text-right"
+            placeholder="Existencia">
+            <span 
+            *ngIf="form.submitted && form.controls['existencia'].errors || producto.existencia < 0" 
+            class='invalid'>Debe ingresar cantidad valida</span>
+        </div>
+      </div>
+  
+      <div class="form-row form-group">
+        <div class="col-md-6"></div>
+        <div class="col-md-6">
+          <button type="submit" class="btn btn-primary w-100 m-2">Guardar</button>
+        </div>
+      </div>
+  
+    </form>
+  </div>

@@ -1,4 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+
+import { UserModel } from 'src/app/definitions/models/user.model';
+import { AuthService } from 'src/app/reusables/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -7,9 +12,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  public user: UserModel;
+
+  constructor(private router: Router, public auth:AuthService ) {
+    this.user = {
+      name: 'admin',
+    };
+    this.user.password = '123456';
+   }
 
   ngOnInit(): void {
+
+    
+
   }
 
+  send( form:NgForm ){
+
+    if( form.invalid ) return;
+
+    if(this.auth.login( this.user ))
+      this.router.navigateByUrl('/products');
+  }
 }

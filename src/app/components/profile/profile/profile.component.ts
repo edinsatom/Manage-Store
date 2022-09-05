@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { FileModel, ProductFile } from 'src/app/definitions/models/file.model';
+import { UserModel } from 'src/app/definitions/models/user.model';
+import { ProductsService } from 'src/app/services/products.service';
 
 @Component({
   selector: 'app-profile',
@@ -7,9 +10,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProfileComponent implements OnInit {
 
-  constructor() { }
+  file!:FileModel;
+  user!:UserModel;
+  loading = true;
+  
+  constructor(
+    private prodService:ProductsService
+  ) { }
 
   ngOnInit(): void {
+    this.prodService.getUsuario()
+      .subscribe( (resp:UserModel) => {
+      this.user = resp;
+      this.prodService.obtenerImagen(this.user.img).subscribe( (resp:any) => {
+        this.user.img = resp;
+        this.loading = false;
+      });
+    });
+  }
+
+  readFile( event: any ){
+    this.file = new ProductFile( event.target.files[0] );
+  }
+
+  uploadFile(){
+    this.prodService.uploadFile( this.file );
+    this.prodService.obtenerImagen('perfil.jpg').subscribe( (resp:any) => {
+      this.user.img = resp;
+    });
   }
 
 }

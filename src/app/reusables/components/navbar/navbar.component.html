@@ -1,1 +1,25 @@
-<p>navbar works</p>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">Catalogo</a>
+
+    <div class="collapse navbar-collapse" id="navbarText">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/products']" routerLinkActive="active">Productos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" *ngIf="isRegistred()" [routerLink]="['/profile']" routerLinkActive="active">Perfil</a>
+            </li>
+        </ul>
+        <span class="navbar-text">
+            <button
+                *ngIf="!isRegistred()" (click)='login()' type="button" class="btn btn-primary">
+                Log in
+            </button>
+
+            <button
+                *ngIf="isRegistred()" (click)='logout()' type="button" class="btn btn-danger">
+                Log out
+            </button>            
+        </span>
+    </div>
+</nav>

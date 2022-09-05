@@ -10,6 +10,14 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { ReusablesModule } from './reusables/reusables.module';
 
 import { AppRoutingModule } from './app-routing.module';
+import { FilterPipe } from './pipes/filter.pipe';
+import { FormsModule } from '@angular/forms';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFireStorageModule } from '@angular/fire/compat/storage';
+import 'firebase/storage';
+import { ScrollingModule } from '@angular/cdk/scrolling';
+import { environment } from 'src/environments/environment';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,12 +25,18 @@ import { AppRoutingModule } from './app-routing.module';
     ProductsComponent,
     CreateProductComponent,
     ProfileComponent,
-    RegisterComponent
+    RegisterComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ScrollingModule,
     AppRoutingModule,
-    ReusablesModule
+    ReusablesModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

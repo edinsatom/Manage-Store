@@ -1,1 +1,46 @@
-<p>register works!</p>
+<div class="container mt-5">
+    <form (ngSubmit)='send( f )' #f='ngForm' novalidate>
+        <div class="col-3 mx-auto">
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="field_user">Usuario</label>
+                    <input class="form-control" 
+                        type="text" 
+                        name="field_user"
+                        [(ngModel)]="user.name"
+                        required
+                        minlength='5'
+                        aria-describedby="emailHelp">
+                    <div 
+                    *ngIf="f.submitted && f.controls['field_user']errors"
+                    class="invalid">
+                        Por favor escribe un nombre!
+                    </div>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col">
+                    <label for="field_password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        name='field_password'
+                        minlength='6'
+                        required
+                        [(ngModel)]="user.password"
+                        class="form-control">
+                    <div 
+                    *ngIf="f.submitted && f.controls['field_password']errors"
+                        class="invalid">
+                        Por favor escribe una contraseña!
+                    </div>
+                </div>
+            </div>
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                <label class="form-check-label ml-1" for="exampleCheck1">Recordar usuario</label>
+            </div>
+            <button class="btn btn-primary w-100"
+                type="submit">Verificar</button>
+        </div>
+    </form>
+</div>
