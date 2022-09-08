@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { UserModel } from 'src/app/definitions/models/user.model';
-import { AuthService } from 'src/app/reusables/services/auth.service';
+import { UserModel } from 'src/app/common-module/models/user.model';
+import { AuthService } from 'src/app/common-module/services/auth.service';
 
 @Component({
   selector: 'app-register',

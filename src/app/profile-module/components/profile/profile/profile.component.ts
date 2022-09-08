@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FileModel, ProductFile } from 'src/app/definitions/models/file.model';
-import { UserModel } from 'src/app/definitions/models/user.model';
-import { ProductsService } from 'src/app/services/products.service';
+import { FileModel, ProductFile } from 'src/app/products-module/models/file.model';
+import { UserModel } from 'src/app/common-module/models/user.model';
+import { ProductsService } from 'src/app/products-module/facades/products.facade';
 
 @Component({
   selector: 'app-profile',

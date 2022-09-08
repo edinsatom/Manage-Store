@@ -1,9 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductModel } from 'src/app/definitions/models/product.model';
-import { AuthService } from 'src/app/reusables/services/auth.service';
-import { ProductsService } from 'src/app/services/products.service';
+import { Store } from '@ngrx/store';
+import { tap } from 'rxjs';
+import { ProductModel } from '../../models/product.model';
+import { AuthService } from 'src/app/common-module/services/auth.service';
+import { ProductsService } from 'src/app/products-module/facades/products.facade';
+
+import * as productActions from '../../store/products.actions'
 
 import Swal from 'sweetalert2';
+
+interface AppState {
+  products: number
+}
 
 @Component({
   selector: 'app-products',
@@ -22,10 +30,38 @@ export class ProductsComponent implements OnInit {
   productos: ProductModel[];
 
   constructor(
+    public store:Store<AppState>,
     public auth:AuthService, 
     private producService:ProductsService
   ) { 
     this.productos = [];
+    this.store.select('products').pipe(
+      tap(state => {
+        console.log(state);
+        
+      })
+    ).subscribe()
+  }
+
+
+  decProduct(){
+    this.store.dispatch(productActions.deleteProduct({
+      product: {
+        id: '01',
+        nombre: 'Producto 01',
+        caracteristicas: '',
+        email: '',
+        origen: '',
+        precio: 20,
+        lanzamiento: '',
+        vendidas: 2,
+        existencia: 4
+      }
+    }))
+  }
+
+  reset(){
+    this.store.dispatch(productActions.resetProduct())
   }
 
   ngOnInit(): void {
@@ -80,19 +116,19 @@ export class ProductsComponent implements OnInit {
   }
   
   ordenarNombre(col: string ){
-    let ordenados:any = this.productos.slice();
-    // if(this.orden2 === '^'){
-    //   ordenados.sort( (a, b ) => {
-    //     return b[col].localeCompare(a[col])
-    //   })
-    //   this.orden2 = 'v';
-    // }
-    // else{
-    //   ordenados.sort( (a, b ) => {
-    //     return a[col].localeCompare(b[col])
-    //   })
-    //   this.orden2 = '^';
-    // }
+    let ordenados:any[] = this.productos.slice();
+    if(this.orden2 === '^'){
+      ordenados.sort( (a, b ) => {
+        return b[col].localeCompare(a[col])
+      })
+      this.orden2 = 'v';
+    }
+    else{
+      ordenados.sort( (a, b ) => {
+        return a[col].localeCompare(b[col])
+      })
+      this.orden2 = '^';
+    }
     this.orden1 = '-';
     this.productos = ordenados;
   }

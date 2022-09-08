@@ -3,11 +3,15 @@ import { HttpClient } from '@angular/common/http';
 
 import { map } from 'rxjs/operators';
 
-import { ProductModel } from '../definitions/models/product.model';
-import { UserModel } from '../definitions/models/user.model';
+import { ProductModel } from '../models/product.model';
+import { UserModel } from '../../common-module/models/user.model';
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { environment } from 'src/environments/environment';
-import { FileModel } from '../definitions/models/file.model';
+import { FileModel } from '../models/file.model';
+import { Store } from '@ngrx/store';
+
+import * as actions from "../store/products.actions";
+import { RequestModel } from 'src/app/common-module/models/request.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +19,29 @@ import { FileModel } from '../definitions/models/file.model';
 export class ProductsService {
 
   private CARPETA_IMG = 'img/';
-  private url = "https://store-63b87-default-rtdb.firebaseio.com";
+  private url = "https://store-66667-default-rtdb.firebaseio.com";
 
   constructor(
-    private http: HttpClient, 
+    private store: Store,
+    private http: HttpClient,
     private storage: AngularFireStorage
   ) { }
+
+  addProduct(item: ProductModel) {
+    const request:RequestModel<ProductModel> = {
+      url: `${this.url}/products.json`,
+      body: item
+    }
+    this.store.dispatch(actions.addProduct({ request }))
+  }
+
+  updateProduct(item: ProductModel) {
+    const request:RequestModel<ProductModel> = {
+      url: this.url,
+      body: item
+    }
+    this.store.dispatch(actions.updateProduct({ request }))
+  }
 
   getProductos() {
 
@@ -29,7 +50,7 @@ export class ProductsService {
         map(resp => this._generarArreglo(resp))
       );
   }
-  
+
   uploadFile(imagen: FileModel) {
     const file = imagen.file;
     const filePath = `${this.CARPETA_IMG}${imagen.nameFile}`;
@@ -54,6 +75,8 @@ export class ProductsService {
         })
       );
   }
+
+
 
   actualizarProducto(producto: ProductModel) {
 
@@ -102,7 +125,7 @@ export class ProductsService {
 
     if (productsObj === null) return [];
 
-    Object.keys(productsObj).forEach(key => {      
+    Object.keys(productsObj).forEach(key => {
       const producto: ProductModel = productsObj[key];
       producto.id = key;
       // this.obtenerImagen(producto.imagen.nombreArchivo).subscribe(

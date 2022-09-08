@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ProductFile } from 'src/app/definitions/models/file.model';
-import { Product, ProductModel } from 'src/app/definitions/models/product.model';
-import { CountriesService } from 'src/app/reusables/services/countries.service';
-import { ProductsService } from 'src/app/services/products.service';
+import { ProductFile } from 'src/app/products-module/models/file.model';
+import { Product, ProductModel } from '../../models/product.model';
+import { CountriesService } from 'src/app/common-module/services/countries.service';
+import { ProductsService } from 'src/app/products-module/facades/products.facade';
 
 
 import Swal from 'sweetalert2';
@@ -18,45 +18,45 @@ import Swal from 'sweetalert2';
 export class CreateProductComponent implements OnInit {
 
   producto: ProductModel = new Product();
-  paises:any[] = [];
-  archivo!:File;
+  paises: any[] = [];
+  archivo!: File;
   minPrecio = 5000;
-  idProduct!:string;
-  nombreArchivo!:string;
-  errorArchivo!:string;
+  idProduct!: string;
+  nombreArchivo!: string;
+  errorArchivo!: string;
 
   constructor(private paiService: CountriesService,
     private producService: ProductsService,
     private router: Router,
-    private route: ActivatedRoute) { 
+    private route: ActivatedRoute) {
 
-    }
+  }
 
   ngOnInit(): void {
 
     console.log(this.route.snapshot.params['id']);
-    
+
     this.idProduct = this.route.snapshot.params['id'];
 
-    if( !!this.idProduct && this.idProduct != 'new') {
-      this.producService.getProducto( this.idProduct )
-        .subscribe( (resp:any) => {
+    if (!!this.idProduct && this.idProduct != 'new') {
+      this.producService.getProducto(this.idProduct)
+        .subscribe((resp: any) => {
           this.producto = resp;
           this.producto.id = this.idProduct;
           // this.producService.obtenerImagen(this.producto.imagen.nameFile)
           //   .subscribe( resp => this.producto.imagen.url = resp);
         })
     }
-    
+
     this.paiService.obtenerPaises()
       .subscribe((resp: any[]) => {
-        this.paises = resp;        
+        this.paises = resp;
       });
 
   }
-  
 
-  leerArchivo(event:any):boolean {
+
+  leerArchivo(event: any): boolean {
     if (event.target.files[0]) {
       this.archivo = event.target.files[0];
       // this.producto.imagen = new ProductFile( this.archivo );
@@ -64,10 +64,10 @@ export class CreateProductComponent implements OnInit {
     return this.validaArchivo();
   }
 
-  guardar(form: NgForm):void {
+  guardar(form: NgForm): void {
 
     let peticion: Observable<any>
-    
+
     // if ( !this.validacion() || form.invalid ) return;
 
     Swal.fire({
@@ -84,9 +84,9 @@ export class CreateProductComponent implements OnInit {
     else {
       peticion = this.producService.actualizarProducto(this.producto);
     }
-    
+
     peticion.subscribe(resp => {
-      
+
       Swal.fire({
         title: this.producto.existencia,
         text: 'Se actualizó correctamente.',
@@ -97,23 +97,23 @@ export class CreateProductComponent implements OnInit {
     })
   }
 
-  actPrecio(e:string):void{
+  actPrecio(e: string): void {
 
     this.producto.precio = Number(e);
-    
+
   }
 
-  validaArchivo():boolean{
+  validaArchivo(): boolean {
 
-    if ( !this.archivo ) {
+    if (!this.archivo) {
       this.errorArchivo = 'Debe seleccionar un archivo';
       return false;
     }
-    if ( this.archivo.type != 'image/jpeg' && this.archivo.type != 'image/png') {
+    if (this.archivo.type != 'image/jpeg' && this.archivo.type != 'image/png') {
       this.errorArchivo = 'Debe seleccionar un archivo jpg o png';
       return false;
     }
-    if ( this.archivo.size/500000 > 1) {
+    if (this.archivo.size / 500000 > 1) {
       this.errorArchivo = 'El archivo debe tener un tamaña inferior a 1Mb';
       return false;
     }
@@ -122,14 +122,14 @@ export class CreateProductComponent implements OnInit {
     return true;
   }
 
-  private validacion( ):boolean{
-    if ( !this.producto.id ){
-      if(!this.validaArchivo()) return false;
-    } 
-    if ( !this.producto.origen ) return false;
+  private validacion(): boolean {
+    if (!this.producto.id) {
+      if (!this.validaArchivo()) return false;
+    }
+    if (!this.producto.origen) return false;
     // if ( Number(this.producto.precio) < this.minPrecio ) return false;
-    if ( this.producto.vendidas < 0 ) return false;
-    if ( this.producto.existencia < 0 ) return false;
+    if (this.producto.vendidas < 0) return false;
+    if (this.producto.existencia < 0) return false;
 
     return true;
   }

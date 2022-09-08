@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { RegisterComponent } from './components/auth/register/register.component';
-import { CreateProductComponent } from './components/products/create-product/create-product.component';
-import { ProductsComponent } from './components/products/products/products.component';
-import { ProfileComponent } from './components/profile/profile/profile.component';
+import { RegisterComponent } from './auth-module/components/register/register.component';
+import { CreateProductComponent } from './products-module/components/create-product/create-product.component';
+import { ProductsComponent } from './products-module/components/products/products.component';
+import { ProfileComponent } from './profile-module/components/profile/profile/profile.component';
 
-import { GuardGuard } from './guard/guard.guard';
+import { GuardGuard } from './common-module/guard/guard.guard';
 
 
 const routes: Routes = [

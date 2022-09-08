@@ -17,4 +17,4 @@ import { RouterModule } from '@angular/router';
     NavbarComponent
   ]
 })
-export class ReusablesModule { }
+export class CommonsModule { }
