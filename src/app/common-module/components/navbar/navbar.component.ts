@@ -18,12 +18,18 @@ export class NavbarComponent implements OnInit {
   }
 
   login(): void {
-    this.router.navigateByUrl('/register')
+    this.router.navigateByUrl('/login')
   }
 
   logout(): void {
-    this.auth.logout();
-    this.router.navigateByUrl('/home')
+    this.auth.logoutUser()
+      .then( resp => {
+        this.router.navigateByUrl('/login')
+      })
+      .catch(err => {
+        console.log(err.message);
+        
+      })
   }
 
   isRegistred(){

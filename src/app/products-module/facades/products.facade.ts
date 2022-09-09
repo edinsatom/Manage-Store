@@ -11,7 +11,7 @@ import { FileModel } from '../models/file.model';
 import { Store } from '@ngrx/store';
 
 import * as actions from "../store/products.actions";
-import { RequestModel } from 'src/app/common-module/models/request.model';
+import { RequestModel } from '../../common-module/models/request.model';
 
 @Injectable({
   providedIn: 'root'

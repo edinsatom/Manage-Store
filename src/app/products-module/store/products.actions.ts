@@ -1,6 +1,6 @@
 import { createAction, props } from "@ngrx/store";
 import { ProductModel } from "../models/product.model";
-import { RequestModel } from "src/app/common-module/models/request.model";
+import { RequestModel } from "../../common-module/models/request.model";
 
 
 export const addProduct = createAction(

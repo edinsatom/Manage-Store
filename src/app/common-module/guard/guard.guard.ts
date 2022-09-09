@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { AuthService } from '../services/auth.service';
+import { tap } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +10,18 @@ import { AuthService } from '../services/auth.service';
 export class GuardGuard implements CanActivate {
 
   constructor(
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) { }
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot):boolean {
-    return this.auth.isAuthenticate();
+  canActivate():Observable<boolean> {
+    return this.auth.isAuthenticate().pipe(
+      tap( (isAuth:boolean) => {
+        if (!isAuth) {
+          this.router.navigate(['/login'])
+        }
+      })
+    );
   }
   
 }

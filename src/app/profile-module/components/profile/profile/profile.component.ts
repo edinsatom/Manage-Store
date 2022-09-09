@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FileModel, ProductFile } from 'src/app/products-module/models/file.model';
 import { UserModel } from 'src/app/common-module/models/user.model';
+import { AuthService } from 'src/app/common-module/services/auth.service';
 import { ProductsService } from 'src/app/products-module/facades/products.facade';
+import { FileModel, ProductFile } from 'src/app/products-module/models/file.model';
 
 @Component({
   selector: 'app-profile',
@@ -12,21 +13,22 @@ export class ProfileComponent implements OnInit {
 
   file!:FileModel;
   user!:UserModel;
-  loading = true;
+  loading = false;
   
   constructor(
+    private auth: AuthService,
     private prodService:ProductsService
   ) { }
 
   ngOnInit(): void {
-    this.prodService.getUsuario()
-      .subscribe( (resp:UserModel) => {
-      this.user = resp;
-      this.prodService.obtenerImagen(this.user.img).subscribe( (resp:any) => {
-        this.user.img = resp;
-        this.loading = false;
-      });
-    });
+    // this.prodService.getUsuario()
+    //   .subscribe( (resp:UserModel) => {
+    //   this.user = resp;
+    //   this.prodService.obtenerImagen(this.user.img).subscribe( (resp:any) => {
+    //     this.user.img = resp;
+    //     this.loading = false;
+    //   });
+    // });
   }
 
   readFile( event: any ){

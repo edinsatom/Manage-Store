@@ -2,13 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ProductFile } from 'src/app/products-module/models/file.model';
 import { Product, ProductModel } from '../../models/product.model';
-import { CountriesService } from 'src/app/common-module/services/countries.service';
-import { ProductsService } from 'src/app/products-module/facades/products.facade';
 
 
 import Swal from 'sweetalert2';
+import { CountriesService } from 'src/app/common-module/services/countries.service';
+import { ProductsService } from '../../facades/products.facade';
 
 @Component({
   selector: 'app-create-product',

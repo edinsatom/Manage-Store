@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../common-module/services/auth.service';
 
-import { UserModel } from 'src/app/common-module/models/user.model';
-import { AuthService } from 'src/app/common-module/services/auth.service';
+import Swal from 'sweetalert2'
 
 @Component({
   selector: 'app-register',
@@ -12,26 +12,48 @@ import { AuthService } from 'src/app/common-module/services/auth.service';
 })
 export class RegisterComponent implements OnInit {
 
-  public user: UserModel;
+  registerForm: FormGroup;
 
-  constructor(private router: Router, public auth:AuthService ) {
-    this.user = {
-      name: 'admin',
-    };
-    this.user.password = '123456';
-   }
-
-  ngOnInit(): void {
-
-    
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    public auth: AuthService
+  ) {
+    this.registerForm = this.fb.group({
+      userName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
+    });
 
   }
 
-  send( form:NgForm ){
+  ngOnInit(): void {
 
-    if( form.invalid ) return;
+  }
 
-    if(this.auth.login( this.user ))
+  send() {
+
+    if (this.registerForm.invalid) return;
+
+    if (this.auth.login(this.registerForm.get('userName')?.value))
       this.router.navigateByUrl('/products');
+  }
+
+  createUser() {
+
+    if (this.registerForm.invalid) return;
+
+    this.auth.createUser(this.registerForm.value)
+      .then(() => {
+        this.router.navigate(['/products'])
+      })
+      .catch((err) => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Opps...',
+          text: err.message,
+        })
+      })
+
   }
 }

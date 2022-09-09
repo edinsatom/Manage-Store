@@ -1,14 +1,15 @@
-export interface UserModel {
-    name: string;
-    password?: string;
+export class UserModel {
+    
     cargo?:string;
     ingreso?:string;
     img?:string;
 
-    // constructor(nombre:string, cargo:string, ingreso:string, img:string){
-    //     this.nombre = nombre;
-    //     this.cargo = cargo;
-    //     this.ingreso = ingreso;
-    //     this.img = img;
-    // }
+    constructor(
+        public uid: string,
+        public email: string,
+        public userName: string,
+        public password: string
+    ){
+    }
+    
 }

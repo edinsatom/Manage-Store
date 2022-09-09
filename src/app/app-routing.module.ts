@@ -6,11 +6,13 @@ import { ProductsComponent } from './products-module/components/products/product
 import { ProfileComponent } from './profile-module/components/profile/profile/profile.component';
 
 import { GuardGuard } from './common-module/guard/guard.guard';
+import { LoginComponent } from './auth-module/components/login/login.component';
 
 
 const routes: Routes = [
   { path: 'products', component: ProductsComponent },
   { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'profile', component: ProfileComponent, canActivate: [ GuardGuard ] },
   { path: 'product/:id', component: CreateProductComponent, canActivate: [ GuardGuard ] },
   { path: '**', pathMatch: 'full', redirectTo: 'products' }

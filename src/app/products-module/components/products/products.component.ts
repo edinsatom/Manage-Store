@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs';
 import { ProductModel } from '../../models/product.model';
-import { AuthService } from 'src/app/common-module/services/auth.service';
-import { ProductsService } from 'src/app/products-module/facades/products.facade';
 
 import * as productActions from '../../store/products.actions'
 
 import Swal from 'sweetalert2';
+import { AuthService } from 'src/app/common-module/services/auth.service';
+import { ProductsService } from '../../facades/products.facade';
 
 interface AppState {
   products: number
