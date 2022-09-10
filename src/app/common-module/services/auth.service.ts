@@ -1,70 +1,72 @@
 import { Injectable } from '@angular/core';
-import { UserModel } from '../../common-module/models/user.model';
+import { FireUser, UserModel } from '../../common-module/models/user.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { AngularFirestore } from '@angular/fire/compat/firestore'
-import { map, Observable } from 'rxjs';
+import { map, Observable, Subscription } from 'rxjs';
 import 'firebase/firestore'
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/app.reducer';
+import * as actions from 'src/app/auth-module/store/auth.actions';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
+  private subs: Subscription = new Subscription();
+  private collection: string = '/profile';
+
   constructor(
     private auth: AngularFireAuth,
     private firestore: AngularFirestore,
+    private store: Store<AppState>
   ) { }
-  
-  login( user:UserModel ):boolean{
-    if(user.userName == 'admin' && user.password == '123456'){
-      localStorage.setItem('token', 'token_de_usuario_12345');
-      return true;
-    }
-    return false;
-  }
 
-  logout(){
-    localStorage.removeItem('token');
-  }
-
-  isAuthenticate():Observable<boolean>{
-
+  isAuthenticate(): Observable<boolean> {
     return this.auth.authState.pipe(
-      map( resp => resp != null )
+      map(resp => resp != null)
     );
   }
 
-  initAuthListener(){
-    this.auth.authState.subscribe( (user: any) => {
-      console.log(user?.multiFactor?.user?.email)
-      console.log(user?.multiFactor?.user?.uid)
+  initAuthListener() {
+    this.auth.authState.subscribe((resp: any) => {
+      if (resp) {
+        const { user } = resp?.multiFactor;
+        this.subs = this.firestore.doc(`${user.uid}${this.collection}`).valueChanges()
+          .subscribe((fireUser: any) => {
+            this.store.dispatch(actions.setUser({ user: fireUser }))
+          })
+      }
+      else {
+        this.subs.unsubscribe();
+        this.store.dispatch(actions.unSetUser())
+      }
     })
   }
 
-  createUser( userData: UserModel ): Promise<any>{
+  createUser(userData: UserModel): Promise<any> {
     const { email, password } = userData;
-    
-    return this.auth.createUserWithEmailAndPassword(email, password)
-      .then( (resp) => {
-        const {user} = resp;
-        
-        const uid = user?.uid ? user?.uid : '';
-        
-        const newUser = new UserModel(uid, userData.userName, userData.email, '');
 
-        return this.firestore.doc(`${uid}/profile`).set({...newUser});
+    return this.auth.createUserWithEmailAndPassword(email, password)
+      .then((resp) => {
+        const { user } = resp;
+
+        const uid = user?.uid ? user?.uid : '';
+
+        const fireUser = new FireUser(userData.userName, userData.email, uid);
+
+        return this.firestore.doc(`${uid}${this.collection}`).set({ ...fireUser });
       })
   }
 
-  loginUser( user: UserModel ):Promise<any> {
+  loginUser(user: UserModel): Promise<any> {
     const { email, password } = user;
 
-    return this.auth.signInWithEmailAndPassword(email, password );
+    return this.auth.signInWithEmailAndPassword(email, password);
   }
 
-  logoutUser(): Promise<any>{
-    console.log('cerrando sesión');
-    
+  logoutUser(): Promise<any> {
+
     return this.auth.signOut();
   }
 

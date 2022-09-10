@@ -21,11 +21,11 @@ import { environment } from 'src/environments/environment';
 
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { productsReducer } from './products-module/store/poducts.reducer';
 import { ProductsComponent } from './products-module/components/products/products.component';
 import { CreateProductComponent } from './products-module/components/create-product/create-product.component';
 import { ProfileComponent } from './profile-module/components/profile/profile/profile.component';
 import { AuthModule } from './auth-module/auth-module.module';
+import { appReducers } from './app.reducer';
 
 
 @NgModule({
@@ -44,7 +44,7 @@ import { AuthModule } from './auth-module/auth-module.module';
     ScrollingModule,
     CommonsModule,
     AppRoutingModule,
-    StoreModule.forRoot({ products : productsReducer}),
+    StoreModule.forRoot(appReducers),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production

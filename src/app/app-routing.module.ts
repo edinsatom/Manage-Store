@@ -5,7 +5,7 @@ import { CreateProductComponent } from './products-module/components/create-prod
 import { ProductsComponent } from './products-module/components/products/products.component';
 import { ProfileComponent } from './profile-module/components/profile/profile/profile.component';
 
-import { GuardGuard } from './common-module/guard/guard.guard';
+import { GuardGuard } from './common-module/guards/guard.guard';
 import { LoginComponent } from './auth-module/components/login/login.component';
 
 

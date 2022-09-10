@@ -35,7 +35,18 @@
                 <label class="form-check-label ml-1" for="exampleCheck1">Recordar usuario</label>
             </div>
 
-            <button class="btn btn-primary w-100" type="submit">Loguear usuario
+            <button 
+                class="btn btn-primary w-100" 
+                *ngIf="!isLoading"
+                type="submit">Loguear usuario
+            </button>
+
+            <button 
+                class="btn btn-primary w-100" 
+                [disabled]="true"
+                *ngIf="isLoading"
+                type="button">
+                Por favor espere
             </button>
 
             <div class="haveAccount">
