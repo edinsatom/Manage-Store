@@ -9,7 +9,10 @@ export class UserModel implements FireUser {
         public uid: string,
         public email: string,
         public password: string,
-    ){
+    ){}
+
+    static blankUser(): UserModel {
+        return new UserModel('', '', '', '')
     }
 }
 
@@ -20,4 +23,8 @@ export class FireUser {
         public email: string,
         public uid: string,
     ){}
+
+    static blankFireUser(): FireUser {
+        return new FireUser('', '', '');
+    }
 }

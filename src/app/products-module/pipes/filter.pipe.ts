@@ -13,7 +13,7 @@ export class FilterPipe implements PipeTransform {
     }
     
     const resultados = [];
-    const opciones:string[] = ['nombre', 'origen'];
+    const opciones:string[] = ['name', 'country'];
     
     for(const elem of value){
       if( elem[opciones[opcion]].toLowerCase().indexOf(buscado.toLowerCase()) > -1 ) {

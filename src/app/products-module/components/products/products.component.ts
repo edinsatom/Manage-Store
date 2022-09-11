@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { ProductModel } from '../../models/product.model';
 
 import * as productActions from '../../store/products.actions'
 
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/common-module/services/auth.service';
-import { ProductsService } from '../../facades/products.facade';
+import { ProductsFacade } from '../../facades/products.facade';
+import { UiFacade } from 'src/app/common-module/facades/ui-facade';
 
 interface AppState {
   products: number
@@ -19,45 +20,24 @@ interface AppState {
   styles: [`
   .list-container { height: 350px}
 `]})
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
 
-  cargando:boolean = false;
+  cargando:boolean = true;
   buscado:string='';
   opcion:number = 0;
   minInventario:number = 50;
   orden1:string = '-';
   orden2:string = '-';
-  productos: ProductModel[];
+  products: ProductModel[] = [];
+
+  private subs: Subscription = new Subscription();
 
   constructor(
-    public store:Store<AppState>,
     public auth:AuthService, 
-    private producService:ProductsService
+    private uiFacade: UiFacade,
+    private store:Store<AppState>,
+    private producFacade:ProductsFacade
   ) { 
-    this.productos = [];
-    this.store.select('products').pipe(
-      tap(state => {
-        console.log(state);
-        
-      })
-    ).subscribe()
-  }
-
-
-  decProduct(){
-    this.store.dispatch(productActions.deleteProduct({
-      product: {
-        id: '01',
-        nombre: 'Producto 01',
-        caracteristicas: '',
-        email: '',
-        origen: '',
-        precio: 20,
-        lanzamiento: '',
-        vendidas: 2,
-        existencia: 4
-      }
-    }))
   }
 
   reset(){
@@ -66,35 +46,46 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     
-    this.cargando = true;
-    this.producService.getProductos()
-      .subscribe( resp => {
-        this.productos = resp;
-        this.cargando = false;
-      });
+    this.subs.add( 
+      this.uiFacade.getLoading().subscribe( resp => {
+        if(!resp) {
+          this.subs.add(this.producFacade.getAllProducts().pipe(
+            tap( resp => {
+              this.cargando = false;
+              this.products = resp;
+            })
+          ).subscribe())
+        }
+      })
+    )
+    
   }
 
-  borrarProducto( producto:ProductModel, i:number ){
-    let prodTmp = this.productos.slice();
+  ngOnDestroy(): void {
+    
+    this.subs.unsubscribe();
+  }
 
+  deleteProduct( item: ProductModel ){
     Swal.fire({
       title: 'Esta seguro?',
-      text: `Esta seguro que desea borrar el producto ${producto.nombre}`,
+      text: `Esta seguro que desea borrar el producto ${item.name}`,
       icon: 'question',
       showConfirmButton: true,
       showCancelButton: true,
     }).then( resp => {
       if( resp.value ){
-        prodTmp.splice(i, 1);
-        this.producService.borrarProducto( producto ).subscribe();
-        this.productos = prodTmp;
+        if(item.uid)
+        this.producFacade.deleteProduct(item.uid)
+          .then( resp => Swal.fire('Registro borrado', 'Registro borrado correctamente', 'success'))
+          .catch( err => Swal.fire('Oppss...', err.message, 'error'))
       }
     })
-
   }
 
+
   ordenar(col: string ){
-    let ordenados:any[] = this.productos.slice();
+    let ordenados:any[] = this.products.slice();
     if(this.orden1 === '^'){
       ordenados.sort( (a, b ) => {
         if( a[col] > b[col] ) return -1;
@@ -112,11 +103,11 @@ export class ProductsComponent implements OnInit {
       this.orden1 = '^';
     }
     this.orden2 = '-';
-    this.productos = ordenados;
+    this.products = ordenados;
   }
   
   ordenarNombre(col: string ){
-    let ordenados:any[] = this.productos.slice();
+    let ordenados:any[] = this.products.slice();
     if(this.orden2 === '^'){
       ordenados.sort( (a, b ) => {
         return b[col].localeCompare(a[col])
@@ -130,6 +121,6 @@ export class ProductsComponent implements OnInit {
       this.orden2 = '^';
     }
     this.orden1 = '-';
-    this.productos = ordenados;
+    this.products = ordenados;
   }
 }

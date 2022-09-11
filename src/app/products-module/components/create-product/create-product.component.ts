@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
-import { Product, ProductModel } from '../../models/product.model';
 
 
 import Swal from 'sweetalert2';
+
 import { CountriesService } from 'src/app/common-module/services/countries.service';
-import { ProductsService } from '../../facades/products.facade';
+import { ProductsFacade } from '../../facades/products.facade';
 
 @Component({
   selector: 'app-create-product',
@@ -16,19 +15,28 @@ import { ProductsService } from '../../facades/products.facade';
 })
 export class CreateProductComponent implements OnInit {
 
-  producto: ProductModel = new Product();
-  paises: any[] = [];
+  productForm: FormGroup;
+  countriesList: any[] = [];
+  idProduct: string | null = null;
   archivo!: File;
-  minPrecio = 5000;
-  idProduct!: string;
   nombreArchivo!: string;
   errorArchivo!: string;
 
-  constructor(private paiService: CountriesService,
-    private producService: ProductsService,
+  constructor(
     private router: Router,
-    private route: ActivatedRoute) {
-
+    private fb: FormBuilder,
+    private route: ActivatedRoute,
+    private paiService: CountriesService,
+    private productFacade: ProductsFacade,
+    ) {
+      this.productForm = this.fb.group({
+        id:      [{value: '', disabled: true}],
+        name: ['', [Validators.required, Validators.minLength(4)]],
+        details: ['', [Validators.required]],
+        country: new FormControl(this.countriesList),
+        stock:   [{value: ''}, [Validators.required, Validators.min(1)]],
+        price:   [{value: ''}, [Validators.required, Validators.min(2000)]]
+      })
   }
 
   ngOnInit(): void {
@@ -37,19 +45,19 @@ export class CreateProductComponent implements OnInit {
 
     this.idProduct = this.route.snapshot.params['id'];
 
-    if (!!this.idProduct && this.idProduct != 'new') {
-      this.producService.getProducto(this.idProduct)
-        .subscribe((resp: any) => {
-          this.producto = resp;
-          this.producto.id = this.idProduct;
-          // this.producService.obtenerImagen(this.producto.imagen.nameFile)
-          //   .subscribe( resp => this.producto.imagen.url = resp);
-        })
-    }
+    // if (!!this.idProduct && this.idProduct != 'new') {
+    //   this.producService.getProducto(this.idProduct)
+    //     .subscribe((resp: any) => {
+    //       this.producto = resp;
+    //       this.producto.id = this.idProduct;
+    //       // this.producService.obtenerImagen(this.producto.imagen.nameFile)
+    //       //   .subscribe( resp => this.producto.imagen.url = resp);
+    //     })
+    // }
 
     this.paiService.obtenerPaises()
       .subscribe((resp: any[]) => {
-        this.paises = resp;
+        this.countriesList = resp;
       });
 
   }
@@ -63,42 +71,23 @@ export class CreateProductComponent implements OnInit {
     return this.validaArchivo();
   }
 
-  guardar(form: NgForm): void {
-
-    let peticion: Observable<any>
-
-    // if ( !this.validacion() || form.invalid ) return;
-
-    Swal.fire({
-      title: 'Espere',
-      text: 'Guardando información de producto',
-      icon: 'info',
-      allowOutsideClick: false
-    });
-    Swal.showLoading();
-
-    if (!this.producto.id) {
-      peticion = this.producService.crearProducto(this.producto);
-    }
-    else {
-      peticion = this.producService.actualizarProducto(this.producto);
-    }
-
-    peticion.subscribe(resp => {
-
-      Swal.fire({
-        title: this.producto.existencia,
-        text: 'Se actualizó correctamente.',
-        icon: 'success'
+  save(): void {
+    console.log(this.productForm);
+    
+    this.productFacade.addProduct(this.productForm.value)
+      .then( resp => {
+        Swal.fire('Éxito!!!', 'Registro guardado', 'success');
+        this.productForm.reset();
       })
-
-      this.router.navigateByUrl(`/products`)
-    })
+      .catch( err => {
+        Swal.fire('Oopps!!!', err.message, 'error');
+      })
+    
   }
 
   actPrecio(e: string): void {
 
-    this.producto.precio = Number(e);
+    // this.producto.precio = Number(e);
 
   }
 
@@ -121,16 +110,5 @@ export class CreateProductComponent implements OnInit {
     return true;
   }
 
-  private validacion(): boolean {
-    if (!this.producto.id) {
-      if (!this.validaArchivo()) return false;
-    }
-    if (!this.producto.origen) return false;
-    // if ( Number(this.producto.precio) < this.minPrecio ) return false;
-    if (this.producto.vendidas < 0) return false;
-    if (this.producto.existencia < 0) return false;
-
-    return true;
-  }
 
 }

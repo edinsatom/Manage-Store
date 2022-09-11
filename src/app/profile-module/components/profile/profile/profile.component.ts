@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserModel } from 'src/app/common-module/models/user.model';
 import { AuthService } from 'src/app/common-module/services/auth.service';
-import { ProductsService } from 'src/app/products-module/facades/products.facade';
+import { ProductsFacade } from 'src/app/products-module/facades/products.facade';
 import { FileModel, ProductFile } from 'src/app/products-module/models/file.model';
 
 @Component({
@@ -17,7 +17,7 @@ export class ProfileComponent implements OnInit {
   
   constructor(
     private auth: AuthService,
-    private prodService:ProductsService
+    private prodService:ProductsFacade
   ) { }
 
   ngOnInit(): void {
@@ -36,10 +36,10 @@ export class ProfileComponent implements OnInit {
   }
 
   uploadFile(){
-    this.prodService.uploadFile( this.file );
-    this.prodService.obtenerImagen('perfil.jpg').subscribe( (resp:any) => {
-      this.user.img = resp;
-    });
+    // this.prodService.uploadFile( this.file );
+    // this.prodService.obtenerImagen('perfil.jpg').subscribe( (resp:any) => {
+    //   this.user.img = resp;
+    // });
   }
 
 }
