@@ -16,7 +16,7 @@ export class AppComponent implements OnInit{
   ) {}
   
   ngOnInit(){
-    this.uiFacade.initLoading();
+    // this.uiFacade.initLoading();
     this.auth.initAuthListener();
   }
 }

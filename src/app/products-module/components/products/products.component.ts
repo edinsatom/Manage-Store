@@ -1,25 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { Subscription, tap } from 'rxjs';
 import { ProductModel } from '../../models/product.model';
 
-import * as productActions from '../../store/products.actions'
 
 import Swal from 'sweetalert2';
 import { AuthService } from 'src/app/common-module/services/auth.service';
 import { ProductsFacade } from '../../facades/products.facade';
 import { UiFacade } from 'src/app/common-module/facades/ui-facade';
 
-interface AppState {
-  products: number
-}
-
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
-  styles: [`
-  .list-container { height: 350px}
-`]})
+  styleUrls: ['./products.component.scss']
+  })
 export class ProductsComponent implements OnInit, OnDestroy {
 
   cargando:boolean = true;
@@ -35,13 +28,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
   constructor(
     public auth:AuthService, 
     private uiFacade: UiFacade,
-    private store:Store<AppState>,
     private producFacade:ProductsFacade
   ) { 
-  }
-
-  reset(){
-    this.store.dispatch(productActions.resetProduct())
   }
 
   ngOnInit(): void {

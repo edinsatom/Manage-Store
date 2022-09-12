@@ -71,8 +71,8 @@ export class AuthService {
   }
 
   loginUser(user: UserModel): Promise<any> {
+    this.uiFacade.initLoading();
     const { email, password } = user;
-
     return this.auth.signInWithEmailAndPassword(email, password);
   }
 
