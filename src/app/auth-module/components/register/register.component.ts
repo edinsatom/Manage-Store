@@ -6,6 +6,8 @@ import { AuthService } from '../../../common-module/services/auth.service';
 import Swal from 'sweetalert2'
 import { Subscription } from 'rxjs';
 import { UiFacade } from 'src/app/common-module/facades/ui-facade';
+import { FireUser, UserModel } from 'src/app/common-module/models/user.model';
+import { AuthFacade } from '../../facades/auth.facade';
 
 @Component({
   selector: 'app-register',
@@ -21,6 +23,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private uiFacade: UiFacade,
+    private authFacade: AuthFacade,
     private router: Router,
     public auth: AuthService
   ) {
@@ -42,27 +45,30 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.subs.unsubscribe();
   }
 
-  createUser() {
+  register() {
 
     if (this.registerForm.invalid) return;
 
     this.uiFacade.initLoading();
 
-    this.auth.createUser(this.registerForm.value)
-      .then(() => {
-        setTimeout(() => {
-          this.uiFacade.stopLoading();
-          this.router.navigate(['/products'])
-        }, 2000);
-      })
-      .catch((err) => {
-        this.uiFacade.stopLoading();
-        Swal.fire({
-          icon: 'error',
-          title: 'Opps...',
-          text: err.message,
-        })
-      })
+    const userData = this.registerForm.value as UserModel
 
+    this.authFacade.createUser(userData)
+      .then( res => {
+        this.authFacade.saveUserData( res as UserModel )
+          .then( res => {
+            console.log(res);
+            
+          })
+          .catch ( err => {
+            console.log(err);
+            
+          })
+      })
+      .catch( err => {
+        console.log(err);
+        
+      })
+    
   }
 }

@@ -1,13 +1,12 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
+import { UploadResult } from "firebase/storage";
 import { Observable } from "rxjs";
-import { filter, map, tap } from "rxjs/operators";
+import { filter, map } from "rxjs/operators";
 import { AppState } from "src/app/app.reducer";
 import { UserModel } from "src/app/common-module/models/user.model";
-import { AuthService } from "src/app/common-module/services/auth.service";
+import { FirebaseService } from "src/app/common-module/services/firebase.service";
 import { FirestoreService } from "src/app/common-module/services/firestore.service";
-
-
 
 @Injectable({
     providedIn: 'root'
@@ -15,8 +14,8 @@ import { FirestoreService } from "src/app/common-module/services/firestore.servi
 
 export class ProfileFacade {constructor(
     private store: Store<AppState>,
-    private auhtService: AuthService,
-    private firestoreService: FirestoreService<UserModel>
+    private firebaseService: FirebaseService,
+    private firestoreService: FirestoreService<UserModel>,
   ){}
 
   getUser(): Observable<any>{
@@ -24,5 +23,21 @@ export class ProfileFacade {constructor(
       filter( resp => !!resp && !!resp.user ),
       map( resp => resp.user )
     )
+  }
+
+  updateImageProfile(uid: string, userData: UserModel){
+    return this.firestoreService.updateItem(`${uid}/profile`, userData)
+  }
+
+  uploadProfileImage(file: File, pathFile: string): Promise<UploadResult>{
+    return this.firebaseService.addFile(file, pathFile)
+  }
+
+  getUrlProfileImage(pathFile: string): Promise<string>{
+    return this.firebaseService.downloadFile(pathFile);
+  }
+
+  deleteProfileImage(pathFile: string){
+    return this.firebaseService.deleteFile(pathFile);
   }
 }

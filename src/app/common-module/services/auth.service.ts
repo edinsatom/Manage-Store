@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as actions from 'src/app/auth-module/store/auth.actions';
 import { UiFacade } from '../facades/ui-facade';
+import firebase from "firebase/compat/app";
 
 @Injectable({
   providedIn: 'root'
@@ -55,19 +56,11 @@ export class AuthService {
     })
   }
 
-  createUser(userData: UserModel): Promise<any> {
+  createUser(userData: UserModel): Promise<firebase.auth.UserCredential> {
     const { email, password } = userData;
 
     return this.auth.createUserWithEmailAndPassword(email, password)
-      .then((resp) => {
-        const { user } = resp;
-
-        const uid = user?.uid ? user?.uid : '';
-
-        const fireUser = new FireUser(userData.userName, userData.email, uid);
-
-        return this.firestore.doc(`${uid}${this.collection}`).set({ ...fireUser });
-      })
+      
   }
 
   loginUser(user: UserModel): Promise<any> {

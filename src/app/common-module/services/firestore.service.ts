@@ -12,6 +12,15 @@ export class FirestoreService<T> {
     private firestore: AngularFirestore
   ) { }
 
+  addItemToDoc(uid_and_collection: string, item: T) {
+    return this.firestore.doc(`${uid_and_collection}`)
+      .set({ ...item });
+  }
+
+  updateItem(uid_and_collection:string, item: T){
+    return this.firestore.doc(uid_and_collection).update({...item});
+  }
+
   addItemToCollection(uid_and_doc: string, collection: string, item: T): Promise<any> {
     return this.firestore.doc(uid_and_doc)
       .collection(collection)
@@ -31,8 +40,10 @@ export class FirestoreService<T> {
     )
   }
 
-  deleteItem( uidAndDocAndCollectionAndItem: string ):Promise<any> {
+  deleteItem(uidAndDocAndCollectionAndItem: string): Promise<any> {
     return this.firestore.doc(uidAndDocAndCollectionAndItem).delete();
   }
-  
+
+
+
 }
