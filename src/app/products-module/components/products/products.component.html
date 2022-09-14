@@ -13,7 +13,7 @@
     </form>
 
     <div class="col text-right">
-        <button *ngIf="auth.isAuthenticate()" [routerLink]="['/product/new']" type="button" class="btn btn-primary">
+        <button *ngIf="authFacade.isAuthenticate()" [routerLink]="['/product/new']" type="button" class="btn btn-primary">
             Agregar
         </button>
     </div>
@@ -34,7 +34,7 @@
                 <th scope="col">Existencia <button class='btn-group btn-group-sm' type="button"
                     (click)='ordenar("stock")'>{{orden1}}</button></th>
                 <th scope="col">Precio</th>
-                <th scope="col" *ngIf="auth.isAuthenticate()">Acciones</th>
+                <th scope="col" *ngIf="authFacade.isAuthenticate()">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -50,7 +50,7 @@
                     {{ product.stock }}
                 </td>
                 <td>{{ product.price | currency:'COL$' }}</td>
-                <td *ngIf="auth.isAuthenticate()">
+                <td *ngIf="authFacade.isAuthenticate()">
                     <button [routerLink]="['/product', product.uid]" class="btn btn-info">
                         Editar
                     </button>

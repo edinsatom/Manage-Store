@@ -16,6 +16,13 @@ export class UserModel implements FireUser {
     }
 }
 
+export interface IUserModel {
+    uid: string;
+    email: string;
+    image: string;
+    userName: string;
+}
+
 export class FireUser {
     
     constructor(

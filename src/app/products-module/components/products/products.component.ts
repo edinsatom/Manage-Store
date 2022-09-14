@@ -4,9 +4,10 @@ import { ProductModel } from '../../models/product.model';
 
 
 import Swal from 'sweetalert2';
-import { AuthService } from 'src/app/common-module/services/auth.service';
+import { AuthService } from 'src/app/auth-module/services/auth.service';
 import { ProductsFacade } from '../../facades/products.facade';
 import { UiFacade } from 'src/app/common-module/facades/ui-facade';
+import { AuthFacade } from 'src/app/auth-module/facades/auth.facade';
 
 @Component({
   selector: 'app-products',
@@ -26,7 +27,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private subs: Subscription = new Subscription();
 
   constructor(
-    public auth:AuthService, 
+    public authFacade:AuthFacade, 
     private uiFacade: UiFacade,
     private producFacade:ProductsFacade
   ) { 

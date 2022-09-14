@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { ProductModel } from '../models/product.model';
 import { FirestoreService } from 'src/app/common-module/services/firestore.service';
-import { AuthService } from 'src/app/common-module/services/auth.service';
+import { AuthService } from 'src/app/auth-module/services/auth.service';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -19,6 +19,7 @@ export class ProductsFacade {
 
   constructor(
     private authService: AuthService,
+
     private firestoreService: FirestoreService<ProductModel>
   ) { 
     
@@ -26,7 +27,7 @@ export class ProductsFacade {
 
   getAllProducts():Observable<any[]>{
 
-    this.uid = this.authService.user?.uid;    
+    this.uid = 'this.authService.user?.uid';
 
     return this.firestoreService.getItemsOfCollection(
       `${this.uid}/${this.document}/${this.collection}`
@@ -35,7 +36,7 @@ export class ProductsFacade {
 
   addProduct(product: ProductModel):Promise<any> {
 
-    this.uid = this.authService.user?.uid;
+    this.uid = 'this.authService.user?.uid';
 
     return this.firestoreService.addItemToCollection(
       `${this.uid}/${this.document}`,
@@ -49,7 +50,7 @@ export class ProductsFacade {
   }
 
   deleteProduct(uidItem: string){
-    this.uid = this.authService.user?.uid;
+    this.uid = 'this.authService.user?.uid';
 
     return this.firestoreService.deleteItem(
       `${this.uid}/${this.document}/${this.collection}/${uidItem}`

@@ -1,7 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
-import { Subscription } from 'rxjs';
-import { AuthService } from '../../services/auth.service';
+import { Store } from '@ngrx/store';
+import { Subscription, tap } from 'rxjs';
+import { AppState } from 'src/app/app.reducer';
+import { AuthFacade } from 'src/app/auth-module/facades/auth.facade';
+
 
 @Component({
   selector: 'app-navbar',
@@ -15,9 +18,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private auth: AuthService
+    private store:Store<AppState>,
+    private authFacade: AuthFacade
   ) { 
-    this.subs = auth.isAuthenticate().subscribe(( resp: boolean) => this.isAuthenticate = resp)
+    this.subs = this.authFacade.isAuthenticate().pipe(
+      tap( resp => this.isAuthenticate = resp )
+    ).subscribe()
   }
 
   ngOnInit(): void {
@@ -32,7 +38,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.auth.logoutUser()
+    this.authFacade.logoutUser()
       .then( resp => {
         this.router.navigateByUrl('/login')
       })
@@ -40,10 +46,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
         console.log(err.message);
         
       })
-  }
-
-  isRegistred(){
-    return this.auth.isAuthenticate();
   }
 
 }

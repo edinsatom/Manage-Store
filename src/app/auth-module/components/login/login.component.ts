@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, tap } from 'rxjs';
 import { UiFacade } from 'src/app/common-module/facades/ui-facade';
-import { AuthService } from 'src/app/common-module/services/auth.service';
+import { AuthFacade } from '../../facades/auth.facade';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -15,52 +15,42 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginForm: FormGroup;
   isLoading: boolean = false;
-  subs: Subscription;
+  subs: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    public auth: AuthService,
-    private uiFacade: UiFacade
+    private uiFacade: UiFacade,
+    private authFacade: AuthFacade,
   ) {
     this.loginForm = this.fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]]
+      email: ['z@z.com', [Validators.required, Validators.email]],
+      password: ['a12345', [Validators.required, Validators.minLength(6)]]
     });
-
-    this.subs = uiFacade.getLoading().subscribe( resp => this.isLoading = resp )
-
   }
 
   ngOnInit(): void {
-
+    this.subs = this.uiFacade.getLoading().pipe(
+      tap( resp => this.isLoading = resp )
+    ).subscribe()
   }
 
   ngOnDestroy(): void {
     this.subs.unsubscribe();
   }
 
-
   loginUser() {
 
     if (this.loginForm.invalid) return;
 
-    this.uiFacade.initLoading();
+    const { email, password } = this.loginForm.value;    
 
-    this.auth.loginUser(this.loginForm.value)
-      .then(() => {
-        setTimeout(() => {
-          this.uiFacade.stopLoading();
-          this.router.navigate(['/products'])
-        }, 2000);
+    this.authFacade.loginUser(email, password)
+      .then(( resp: boolean ) => {
+        if(resp) this.router.navigate(['/products'])
       })
       .catch((err) => {
-        this.uiFacade.stopLoading();
-        Swal.fire({
-          icon: 'error',
-          title: 'Oopps...',
-          text: err.message
-        })
+        Swal.fire('Opps!!!', err.message, 'error')
 
       })
 

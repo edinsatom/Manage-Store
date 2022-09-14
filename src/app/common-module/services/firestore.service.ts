@@ -12,6 +12,10 @@ export class FirestoreService<T> {
     private firestore: AngularFirestore
   ) { }
 
+  subscribeToDoc(path: string){
+    return this.firestore.doc(path).valueChanges()
+  }
+
   addItemToDoc(uid_and_collection: string, item: T) {
     return this.firestore.doc(`${uid_and_collection}`)
       .set({ ...item });
