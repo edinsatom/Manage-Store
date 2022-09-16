@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ScrollingModule } from '@angular/cdk/scrolling';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { StoreModule } from '@ngrx/store';
 
@@ -26,6 +26,7 @@ import { productsReducer } from './store/poducts.reducer'
   ],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     StoreModule.forFeature('inventory', productsReducer),
     ScrollingModule,

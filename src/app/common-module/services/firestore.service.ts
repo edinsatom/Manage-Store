@@ -44,6 +44,10 @@ export class FirestoreService<T> {
     )
   }
 
+  getItemOfCollection(pathCollection: string, itemId: string): Observable<any>{
+    return this.firestore.collection(pathCollection).doc(itemId).get()
+  }
+
   deleteItem(uidAndDocAndCollectionAndItem: string): Promise<any> {
     return this.firestore.doc(uidAndDocAndCollectionAndItem).delete();
   }

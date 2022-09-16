@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription, tap } from 'rxjs';
+import { mergeAll, Subscription, tap } from 'rxjs';
 import { ProductModel } from '../../models/product.model';
 
 
 import Swal from 'sweetalert2';
-import { AuthService } from 'src/app/auth-module/services/auth.service';
 import { ProductsFacade } from '../../facades/products.facade';
 import { UiFacade } from 'src/app/common-module/facades/ui-facade';
 import { AuthFacade } from 'src/app/auth-module/facades/auth.facade';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-products',
@@ -17,42 +17,54 @@ import { AuthFacade } from 'src/app/auth-module/facades/auth.facade';
 export class ProductsComponent implements OnInit, OnDestroy {
 
   cargando:boolean = true;
-  buscado:string='';
-  opcion:number = 0;
   minInventario:number = 50;
   orden1:string = '-';
   orden2:string = '-';
   products: ProductModel[] = [];
+  uid: string | null = null;
+  search: string = '';
+  option: number = 0
 
-  private subs: Subscription = new Subscription();
+  private subs: Subscription[] = [];
 
   constructor(
     public authFacade:AuthFacade, 
     private uiFacade: UiFacade,
-    private producFacade:ProductsFacade
+    private productFacade:ProductsFacade
   ) { 
   }
 
   ngOnInit(): void {
-    
-    this.subs.add( 
-      this.uiFacade.getLoading().subscribe( resp => {
-        if(!resp) {
-          this.subs.add(this.producFacade.getAllProducts().pipe(
-            tap( resp => {
-              this.cargando = false;
-              this.products = resp;
-            })
-          ).subscribe())
-        }
-      })
+
+    this.subs.push(
+      this.productFacade.getCurrentUser().pipe(
+        tap(resp => {
+          if (resp) this.uid = resp.uid;
+          else this.uid = null;
+          this.uiFacade.getLoading().subscribe( resp => {
+            if(!resp && this.uid) {
+              this.subs.push(
+                this.productFacade.getAllProducts(this.uid).pipe(
+                  tap( resp => {
+                    this.cargando = false;
+                    this.products = resp;
+                  })
+                ).subscribe()
+              )
+            }
+          })
+        })
+      ).subscribe()
     )
+
+    
     
   }
 
   ngOnDestroy(): void {
     
-    this.subs.unsubscribe();
+    this.subs.map( x => x.unsubscribe() )
+    this.subs = [];
   }
 
   deleteProduct( item: ProductModel ){
@@ -64,8 +76,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
       showCancelButton: true,
     }).then( resp => {
       if( resp.value ){
-        if(item.uid)
-        this.producFacade.deleteProduct(item.uid)
+        if(item.uid && this.uid)
+        this.productFacade.deleteProduct(this.uid, item.uid)
           .then( resp => Swal.fire('Registro borrado', 'Registro borrado correctamente', 'success'))
           .catch( err => Swal.fire('Oppss...', err.message, 'error'))
       }

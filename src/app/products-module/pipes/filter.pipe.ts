@@ -6,22 +6,22 @@ import { ProductModel } from '../models/product.model';
 })
 export class FilterPipe implements PipeTransform {
 
-  transform(value: any, buscado:string, opcion: number): ProductModel[] {
-
-    if(buscado.length < 2 ) {
+  transform(value: any, searching:string, option: number): ProductModel[] {
+    
+    if(searching.length < 2 ) {
       return value;
     }
     
-    const resultados = [];
-    const opciones:string[] = ['name', 'country'];
+    const resp = [];
+    const filterOptions:string[] = ['name', 'country'];
     
     for(const elem of value){
-      if( elem[opciones[opcion]].toLowerCase().indexOf(buscado.toLowerCase()) > -1 ) {
-        resultados.push( elem );
+      if( elem[filterOptions[option]].toLowerCase().indexOf(searching.toLowerCase()) > -1 ) {
+        resp.push( elem );
       }
     }
 
-    return resultados;
+    return resp;
   }
 
 }

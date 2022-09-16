@@ -4,11 +4,11 @@
 
     <form class="form-inline ml-3">
         <label for="inputGroupSelect01">Filtrar por:</label>
-        <select class="custom-select ml-1" name="filtro">
+        <select [(ngModel)]="option" class="custom-select ml-1"  name="option">
             <option value='0'>Nombre</option>
             <option value='1'>Origen</option>
         </select>
-        <input name='buscado' class="form-control mr-sm-2" type="text" placeholder="Buscado"
+        <input [(ngModel)]="search" name="search" class="form-control mr-sm-2" type="text" placeholder="Buscado"
             aria-label="filtro">
     </form>
 
@@ -28,7 +28,7 @@
                 <th scope="col">id</th>
                 <th scope="col">Producto <button class='btn-group btn-group-sm' type="button"
                         (click)='ordenarNombre("name")'>{{orden2}}</button></th>
-                <!-- <th scope="col">Imagen</th> -->
+                <th scope="col">Imagen</th>
                 <th scope="col">Características</th>
                 <th scope="col">Origen</th>
                 <th scope="col">Existencia <button class='btn-group btn-group-sm' type="button"
@@ -38,10 +38,10 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="text-center" *cdkVirtualFor="let product of products | filter:buscado:opcion; let i = index">
+            <tr class="text-center" *cdkVirtualFor="let product of products | filter:search:option; let i = index">
                 <th scope="row">{{ i + 1 }}</th>
                 <td>{{ product.name }} </td>
-                <!-- <td> <img [src]='product.imagen.url ' [alt]='product.nombre' width='50px'> </td> -->
+                <td> <img [src]='product.image ' [alt]='product.name' width='50px'> </td>
                 <td>{{ product.details }} </td>
                 <td>{{ product.country }} </td>
                 <td class="badge align-middle"

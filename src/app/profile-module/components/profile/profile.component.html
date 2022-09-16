@@ -13,15 +13,12 @@
                 </div>
             </div>
         </div>
+        <div>
+            <input type="file" name="imgProfile" id="imgProfile" value="Seleccionar archivo" (change)="readFile($event)">
+            <input type="button" value="Actualizar imangen"  (click)="uploadFile()">
+        </div>
     </div>
     
-</div>
-
-<div>
-    <input type="file" name="imgProfile" id="imgProfile" (change)="readFile($event)">
-    <input type="button" value="Subir archivo"  (click)="uploadFile()">
-    <input type="button" value="Url archivo"    (click)="getUrlFile()">
-    <input type="button" value="Borrar archivo" (click)="deleteFile()">
 </div>
 
 <div *ngIf="loading" class="col-7 mx-auto alert alert-info text-center" role="alert">
