@@ -1,0 +1,98 @@
+<div class="col text-right mb-3">
+  <button routerLink="/products" type="button" class="btn btn-danger">
+    Cerrar
+  </button>
+</div>
+
+<hr>
+
+<div>
+  <form [formGroup]="productForm" (ngSubmit)='save( )' class='container mt-4'>
+
+    <div class="form-row">
+      <div class="col-md-9"></div>
+      <div class="form-group col-md-3">
+        <label for='id'>ID</label>
+        <input formControlName="id" name='id' type="text" class="form-control" placeholder="Product id">
+      </div>
+    </div>
+
+    <div class="form-row mt-3">
+
+      <div class="form-row col-md-12">
+        <div class="form-group col-6">
+          <label for='name'>Producto</label>
+          <input formControlName="name" name='name' type="text" class="form-control" placeholder="Nombre de Producto">
+          <span *ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid" class='invalid'>Debe
+            ingresar un nombre de producto</span>
+        </div>
+
+        <div class="col-1"></div>
+
+        <div class="form-group col-5">
+          <label for='imageFile'>Imagen</label>
+          <input name='imageFile' class="col" type="file" accept=".jpg, .png" (change)="readFile($event)">
+          <span *ngIf="productForm.get('file')?.touched && productForm.get('file')?.invalid" class='invalid'>{{
+            errorArchivo }} </span>
+        </div>
+
+      </div>
+
+      <div class="row no-gutters">
+
+        <div class="form-group col-8">
+          <label for='details'>Detalles</label>
+          <textarea formControlName="details" name='details' class="form-control" placeholder="Detalles" rows="5">
+            </textarea>
+          <span *ngIf="productForm.get('details')?.touched && productForm.get('details')?.invalid" class='invalid'>Debe
+            ingresar una descripción del producto
+          </span>
+        </div>
+
+        <div class="form-group col-md-6">
+          <label for='origen'>Pais de origen</label>
+          <select formControlName="country" name='country' class="form-control">
+            <option selected>Pais de origen</option>
+            <option *ngFor="let item of countriesList">{{ item }}</option>
+          </select>
+          <span *ngIf="productForm.get('country')?.touched && productForm.get('country')?.invalid" class='invalid'>Debe
+            seleccionar un pais de procedencia.</span>
+        </div>
+
+      </div>
+
+      <div class="col-md-3">
+        <label for="">Imagen del producto</label>
+        <img *ngIf="!imgProductTemp.length && imgProduct?.length" [src]='imgProduct' class="card-img" [alt]=''>
+        <img *ngIf="imgProductTemp" [src]='imgProductTemp' class="card-img" [alt]='productForm.get("name")?.value'>
+      </div>
+    </div>
+
+    <div class="form-row mt-3">
+
+      <div class="col-md-3 mx-auto">
+        <label for='precio'>Precio</label>
+        <input formControlName="price" name='price' type="number" class="form-control text-right" placeholder="Precio">
+        <span *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid" class='invalid'>El precio
+          mínimo es: </span>
+      </div>
+
+        <div class="col-md-3 mx-auto">
+          <label for='existencia'>Existencia</label>
+          <input formControlName="stock" name='stock' type="number" class="form-control text-right"
+            placeholder="Existencia">
+          <span *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid" class='invalid'>Debe
+            ingresar cantidad valida</span>
+        </div>
+
+        <div *ngIf="idProduct == 'new'" class="col-md-6 mt-4">
+          <button type="submit" class="btn btn-primary w-100 m-2">Guardar</button>
+        </div>
+
+        <div *ngIf="idProduct != 'new'" class="col-md-6 mt-4">
+          <button type="submit" class="btn btn-warning w-100 m-2">Update</button>
+        </div>
+
+    </div>
+  </form>
+</div>

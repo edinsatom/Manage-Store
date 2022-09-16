@@ -1,0 +1,81 @@
+<h1>Listado de productos</h1>
+<hr>
+<div class="row mb-3">
+
+    <form class="form-inline ml-3">
+        <label for="inputGroupSelect01">Filtrar por:</label>
+        <select [(ngModel)]="option" class="custom-select ml-1"  name="option">
+            <option value='0'>Nombre</option>
+            <option value='1'>Origen</option>
+        </select>
+        <input [(ngModel)]="search" name="search" class="form-control mr-sm-2" type="text" placeholder="Buscado"
+            aria-label="filtro">
+    </form>
+
+    <div class="col text-right">
+        <button *ngIf="authFacade.isAuthenticate()" [routerLink]="['/product/new']" type="button" class="btn btn-primary">
+            Agregar
+        </button>
+    </div>
+</div>
+
+<hr>
+
+<cdk-virtual-scroll-viewport itemSize='100' class="list-container" *ngIf="!cargando && products.length > 0 ">
+    <table class="table">
+        <thead class="thead-dark text-center">
+            <tr>
+                <th scope="col">id</th>
+                <th scope="col">Producto <button class='btn-group btn-group-sm' type="button"
+                        (click)='ordenarNombre("name")'>{{orden2}}</button></th>
+                <th scope="col">Imagen</th>
+                <th scope="col">Características</th>
+                <th scope="col">Origen</th>
+                <th scope="col">Existencia <button class='btn-group btn-group-sm' type="button"
+                    (click)='ordenar("stock")'>{{orden1}}</button></th>
+                <th scope="col">Precio</th>
+                <th scope="col" *ngIf="authFacade.isAuthenticate()">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="text-center" *cdkVirtualFor="let product of products | filter:search:option; let i = index">
+                <th scope="row">{{ i + 1 }}</th>
+                <td>{{ product.name }} </td>
+                <td> <img [src]='product.image ' [alt]='product.name' width='50px'> </td>
+                <td>{{ product.details }} </td>
+                <td>{{ product.country }} </td>
+                <td class="badge align-middle"
+                    [ngClass]="{'badge-danger': product.stock < minInventario,
+                                'badge-success': product.stock > minInventario - 1 }">
+                    {{ product.stock }}
+                </td>
+                <td>{{ product.price | currency:'COL$' }}</td>
+                <td *ngIf="authFacade.isAuthenticate()">
+                    <button [routerLink]="['/product', product.uid]" class="btn btn-info">
+                        Editar
+                    </button>
+                    <button (click)='deleteProduct( product )' class="btn btn-danger">
+                        Borrar
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</cdk-virtual-scroll-viewport>
+
+<div *ngIf="!cargando && products.length === 0 " class="alert alert-warning text-center" role="alert">
+    <h4 class="alert-heading">No hay registros</h4>
+    <h1 class="mb-0">
+        <strong>!</strong>
+    </h1>
+</div>
+
+<div *ngIf="cargando" class="alert alert-info text-center" role="alert">
+    <h4 class="alert-heading">Cargando...</h4>
+    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+    <p class="mb-0">
+        Espere por favor.
+    </p>
+</div>
