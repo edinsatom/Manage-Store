@@ -1,6 +1,5 @@
 import { Action, createReducer, on} from "@ngrx/store";
-import { AppState } from "@root/app/app.reducer";
-
+import { AppState } from "src/app/app.reducer";
 import { ProductModel } from "../models/product.model";
 import * as productsActions from "./products.actions";
 

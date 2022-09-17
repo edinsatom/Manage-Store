@@ -6,14 +6,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { StoreModule } from '@ngrx/store';
 
-import { FilterPipe } from '@products-module/pipes/filter.pipe';
+import { FilterPipe } from './pipes/filter.pipe';
 
-import { ProductsComponent } from '@products-module/components/products/products.component';
-import { CreateProductComponent } from '@products-module/components/create-product/create-product.component';
-import { BaseComponent } from '@products-module/components/base/base.component';
-import { ProductsRoutingModule } from '@products-module/products-routing.module';
-import { productsReducer } from '@products-module/store/poducts.reducer'
-import { CommonsModule } from '@common-module/commons.module';
+import { ProductsComponent } from './components/products/products.component';
+import { CreateProductComponent } from './components/create-product/create-product.component';
+import { BaseComponent } from './components/base/base.component';
+import { ProductsRoutingModule } from './products-routing.module';
+import { productsReducer } from './store/poducts.reducer'
+import { CommonsModule } from '../common-module/commons.module';
 
 
 
@@ -33,7 +33,8 @@ import { CommonsModule } from '@common-module/commons.module';
     StoreModule.forFeature('inventory', productsReducer),
     ScrollingModule,
     ReactiveFormsModule,
-    ProductsRoutingModule
+    ProductsRoutingModule,
+    CommonsModule
   ]
 })
 export class ProductsModule { }

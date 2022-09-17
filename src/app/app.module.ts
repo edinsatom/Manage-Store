@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonsModule } from '@common-module/commons.module';
+import { CommonsModule } from './common-module/commons.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ScrollingModule } from '@angular/cdk/scrolling';
@@ -13,14 +13,14 @@ import { AngularFireStorageModule } from '@angular/fire/compat/storage';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 
-import { AppComponent } from '@root/app/app.component';
-import { AppRoutingModule } from '@root/app/app-routing.module';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
-import { environment } from '@environments/environment';
+import { environment } from 'src/environments/environment';
 
-import { AuthModule } from '@auth-module/auth-module.module';
-import { appReducers } from '@root/app/app.reducer';
-import { ProfileModule } from '@profile-module/profile.module';
+import { AuthModule } from './auth-module/auth-module.module';
+import { appReducers } from './app.reducer';
+import { ProfileModule } from './profile-module/profile.module';
 
 
 @NgModule({

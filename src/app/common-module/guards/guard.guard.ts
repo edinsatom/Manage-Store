@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, CanLoad, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { take, tap } from 'rxjs/operators'
-import { AuthFacade } from '@auth-module/facades/auth.facade';
+import { AuthFacade } from 'src/app/auth-module/facades/auth.facade';
 
 @Injectable({
   providedIn: 'root'
