@@ -26,8 +26,9 @@ import { CommonsModule } from '../common-module/commons.module';
     FilterPipe,
   ],
   imports: [
-    CommonModule,
     FormsModule,
+    CommonModule,
+    CommonsModule,
     RouterModule,
     StoreModule.forFeature('inventory', productsReducer),
     ScrollingModule,
