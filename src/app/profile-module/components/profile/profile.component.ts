@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription, tap } from 'rxjs';
-import { FireUser, UserModel } from 'src/app/common-module/models/user.model';
-import { FileModel, ProductFile } from 'src/app/products-module/models/file.model';
-import { ProfileFacade } from '../../facades/profile.facade';
+import { FireUser, UserModel } from '@common-module/models/user.model';
+import { FileModel, ProductFile } from '@products-module/models/file.model';
+import { ProfileFacade } from '@profile-module/facades/profile.facade';
 
 @Component({
   selector: 'app-profile',

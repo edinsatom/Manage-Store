@@ -2,9 +2,9 @@
 
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BaseComponent } from './components/base/base.component';
-import { CreateProductComponent } from './components/create-product/create-product.component';
-import { ProductsComponent } from './components/products/products.component';
+import { BaseComponent } from '@products-module/components/base/base.component';
+import { CreateProductComponent } from '@products-module/components/create-product/create-product.component';
+import { ProductsComponent } from '@products-module/components/products/products.component';
 
 export const routes: Routes = [
     { path: '', 

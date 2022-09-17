@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { getApp } from "firebase/app";
 import { deleteObject, getDownloadURL, getStorage, ref, uploadBytes, UploadResult } from "firebase/storage";
-import { environment } from 'src/environments/environment';
+import { environment } from '@environments/environment';
+
 
 @Injectable({
   providedIn: 'root'

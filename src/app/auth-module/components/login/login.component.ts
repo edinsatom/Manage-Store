@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
-import { UiFacade } from 'src/app/common-module/facades/ui-facade';
-import { AuthFacade } from '../../facades/auth.facade';
+import { UiFacade } from '@common-module/facades/ui-facade';
+import { AuthFacade } from '@auth-module/facades/auth.facade';
 import Swal from 'sweetalert2';
 
 @Component({

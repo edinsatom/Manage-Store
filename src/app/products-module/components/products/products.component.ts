@@ -1,13 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { mergeAll, Subscription, tap } from 'rxjs';
-import { ProductModel } from '../../models/product.model';
+import { Subscription, tap } from 'rxjs';
+import { ProductModel } from '@products-module/models/product.model';
 
 
 import Swal from 'sweetalert2';
-import { ProductsFacade } from '../../facades/products.facade';
-import { UiFacade } from 'src/app/common-module/facades/ui-facade';
-import { AuthFacade } from 'src/app/auth-module/facades/auth.facade';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ProductsFacade } from '@products-module/facades/products.facade';
+import { UiFacade } from '@common-module/facades/ui-facade';
+import { AuthFacade } from '@auth-module/facades/auth.facade';
 
 @Component({
   selector: 'app-products',

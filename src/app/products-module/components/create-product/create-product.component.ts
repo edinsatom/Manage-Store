@@ -5,10 +5,11 @@ import { ActivatedRoute } from '@angular/router';
 
 import Swal from 'sweetalert2';
 
-import { CountriesService } from 'src/app/common-module/services/countries.service';
-import { ProductsFacade } from '../../facades/products.facade';
+import { ProductsFacade } from '@products-module/facades/products.facade';
 import { Subscription, tap } from 'rxjs';
-import { ProductFile } from '../../models/file.model';
+import { CountriesService } from '@common-services/countries.service';
+import { ProductFile } from '@products-module/models/file.model';
+
 
 @Component({
   selector: 'app-create-product',
@@ -68,7 +69,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
           if (resp) {
             this.uid = resp.uid
 
-            if (!!this.idProduct && this.idProduct != 'new') {
+            if (!!this.idProduct && this.uid && this.idProduct != 'new') {
               this.subs.push(
                 this.productFacade.getProduct(this.uid, this.idProduct).pipe(
                   tap((resp: any) => {
@@ -133,7 +134,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
     else {
       this.productFacade.updateProduct(uid, itemId, this.productForm.value)
       .then(() => Swal.fire('Exito!!!', 'Producto actualizado con éxito.', 'success'))
-      .catch((err) => { Swal.fire('Oppsss!!', err.message, 'error') })
+      .catch((err: any) => { Swal.fire('Oppsss!!', err.message, 'error') })
     }
   }
 
@@ -144,7 +145,9 @@ export class CreateProductComponent implements OnInit, OnDestroy {
 
   async save(): Promise<void> {
 
-    if (this.idProduct) {
+    console.log(this.idProduct);
+    
+    if (this.idProduct != 'new') {
       this.update()
       return
     }
@@ -183,10 +186,10 @@ export class CreateProductComponent implements OnInit, OnDestroy {
               image: resp
             }
             this.productFacade.updateProduct(uid, itemId, updateRecord)
-              .then(res => {
+              .then((res: any) => {
                 Swal.fire('Éxito!!!', 'Registro guardado', 'success');
               })
-              .catch(rej => {
+              .catch((rej: any) => {
                 Swal.fire('Error!!!', rej.message, 'error');
               })
           })

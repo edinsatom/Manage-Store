@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
-import * as actions from "../store/ui.actions";
-import { AppState } from "src/app/app.reducer";
+import * as actions from "@common-module/store/ui.actions";
+import { AppState } from "@root/app/app.reducer";
 import { map, Observable } from "rxjs";
 
 @Injectable({

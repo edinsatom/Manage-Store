@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { IUserModel } from "src/app/common-module/models/user.model";
+import { IUserModel } from "@common-module/models/user.model";
 
 
 export const isAuth = createAction(

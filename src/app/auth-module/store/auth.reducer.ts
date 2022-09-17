@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import { FireUser } from "src/app/common-module/models/user.model";
-import * as authActions from "./auth.actions"
+import { FireUser } from "@common-module/models/user.model";
+import * as authActions from "@auth-module/store/auth.actions"
 
 export interface AuthState {
     user: FireUser | null;
