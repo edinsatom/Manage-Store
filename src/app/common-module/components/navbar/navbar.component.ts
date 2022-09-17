@@ -2,8 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router'
 import { Store } from '@ngrx/store';
 import { Subscription, tap } from 'rxjs';
-import { AppState } from 'src/app/app.reducer';
-import { AuthFacade } from 'src/app/auth-module/facades/auth.facade';
+import { AppState } from '@root/app/app.reducer';
+import { AuthFacade } from '@auth-module/facades/auth.facade';
 
 
 @Component({
@@ -40,7 +40,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   logout(): void {
     this.authFacade.logoutUser()
       .then( resp => {
-        this.router.navigateByUrl('/login')
+        window.location.reload()
       })
       .catch(err => {
         console.log(err.message);

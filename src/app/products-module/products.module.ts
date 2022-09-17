@@ -13,6 +13,7 @@ import { CreateProductComponent } from './components/create-product/create-produ
 import { BaseComponent } from './components/base/base.component';
 import { ProductsRoutingModule } from './products-routing.module';
 import { productsReducer } from './store/poducts.reducer'
+import { CommonsModule } from '../common-module/commons.module';
 
 
 
@@ -31,7 +32,8 @@ import { productsReducer } from './store/poducts.reducer'
     StoreModule.forFeature('inventory', productsReducer),
     ScrollingModule,
     ReactiveFormsModule,
-    ProductsRoutingModule
+    ProductsRoutingModule,
+    CommonsModule
   ]
 })
 export class ProductsModule { }
