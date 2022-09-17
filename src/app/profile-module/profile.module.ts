@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileComponent } from '@profile-module/components/profile/profile.component';
-import { CommonsModule } from '@common-module/commons.module';
+import { ProfileComponent } from './components/profile/profile.component';
+import { CommonsModule } from '../common-module/commons.module';
 
 @NgModule({
   declarations: [

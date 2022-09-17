@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import { IUserModel } from '@common-module/models/user.model';
-import { AuthService } from '@auth-module/services/auth.service';
-import { FirestoreService } from '@common-module/services/firestore.service';
-import { UiFacade } from '@common-module/facades/ui-facade';
+import { IUserModel } from 'src/app/common-module/models/user.model';
+import { AuthService } from '../services/auth.service';
+import { FirestoreService } from 'src/app/common-module/services/firestore.service';
+import { UiFacade } from 'src/app/common-module/facades/ui-facade';
 import { Observable, Subscription } from 'rxjs';
 import { tap, map } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { AppState } from '@root/app/app.reducer';
-import * as actions from '@auth-module/store/auth.actions';
+import { AppState } from 'src/app/app.reducer';
+import * as actions from 'src/app/auth-module/store/auth.actions';
 
 @Injectable({ providedIn: 'root' })
 export class AuthFacade {
