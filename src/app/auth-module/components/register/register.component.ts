@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import Swal from 'sweetalert2'
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators'
-import { UiFacade } from 'src/app/common-module/facades/ui-facade';
-import { AuthFacade } from '../../facades/auth.facade';
-import { IUserModel } from 'src/app/common-module/models/user.model';
+import { UiFacade } from '@common-module/facades/ui-facade';
+import { AuthFacade } from '@auth-module/facades/auth.facade';
+import { IUserModel } from '@common-module/models/user.model';
 
 @Component({
   selector: 'app-register',

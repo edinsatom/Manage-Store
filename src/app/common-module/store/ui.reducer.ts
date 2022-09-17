@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from "@ngrx/store";
-import * as uiActions from "./ui.actions"
+import * as uiActions from "@common-module/store/ui.actions"
 
 export interface UIState {
     isLoading: boolean;

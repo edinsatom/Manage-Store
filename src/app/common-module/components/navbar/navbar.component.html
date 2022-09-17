@@ -1,10 +1,10 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
     <a class="navbar-brand" href="#">Catalogo</a>
 
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/products']" routerLinkActive="active">Productos</a>
+                <a class="nav-link" *ngIf="isAuthenticate" [routerLink]="['/products']" routerLinkActive="active">Productos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" *ngIf="isAuthenticate" [routerLink]="['/profile']" routerLinkActive="active">Perfil</a>

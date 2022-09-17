@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IUserModel } from '../../common-module/models/user.model';
+import { IUserModel } from '@common-module/models/user.model';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
 import 'firebase/firestore'

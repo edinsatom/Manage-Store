@@ -3,10 +3,10 @@ import { Store } from "@ngrx/store";
 import { UploadResult } from "firebase/storage";
 import { Observable } from "rxjs";
 import { filter, map } from "rxjs/operators";
-import { AppState } from "src/app/app.reducer";
-import { UserModel } from "src/app/common-module/models/user.model";
-import { FirebaseService } from "src/app/common-module/services/firebase.service";
-import { FirestoreService } from "src/app/common-module/services/firestore.service";
+import { AppState } from "@root/app/app.reducer";
+import { UserModel } from "@common-module/models/user.model";
+import { FirebaseService } from "@common-module/services/firebase.service";
+import { FirestoreService } from "@common-module/services/firestore.service";
 
 @Injectable({
     providedIn: 'root'

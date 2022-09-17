@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 
-import { ProductModel } from '../models/product.model';
-import { FirestoreService } from 'src/app/common-module/services/firestore.service';
+import { ProductModel } from '@products-module/models/product.model';
+import { FirestoreService } from '@common-module/services/firestore.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
-import { FirebaseService } from 'src/app/common-module/services/firebase.service';
-import { AppState } from 'src/app/app.reducer';
+import { FirebaseService } from '@common-module/services/firebase.service';
+import { AppState } from '@root/app/app.reducer';
 import { Store } from '@ngrx/store';
-import { IUserModel } from 'src/app/common-module/models/user.model';
-import { AuthState } from 'src/app/auth-module/store/auth.reducer';
+import { IUserModel } from '@common-module/models/user.model';
+import { AuthState } from '@auth-module/store/auth.reducer';
 import { UploadResult } from 'firebase/storage';
 
 @Injectable({

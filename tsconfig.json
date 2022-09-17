@@ -3,6 +3,18 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
+    "paths": {
+      "@root/*":["src/*"],
+      "@environments/*": ["src/environments/*"],
+      "@auth-module/*": ["src/app/auth-module/*"],
+      "@common-module/*": ["src/app/common-module/*"],
+      "@profile-module/*": ["src/app/profile-module/*"],
+      "@products-module/*":["src/app/products-module/*"],
+      "@common-store/*": ["src/app/common-module/store/*"],
+      "@common-models/*": ["src/app/common-module/models/*"],
+      "@common-facades/*": ["src/app/common-module/facades/*"],
+      "@common-services/*": ["src/app/common-module/services/*"],
+    },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
@@ -21,7 +33,7 @@
     "lib": [
       "es2020",
       "dom"
-    ]
+    ],
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
