@@ -1,16 +1,40 @@
 <app-navbar></app-navbar>
-<div class="col-7 m-5 mx-auto" *ngIf="!loading">
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row no-gutters">
-            <div class="col-md-4">
+
+
+<div class="container">
+    <div class="image-profile">
+        <div class="label-image">
+            <span>Imagen del perfil</span>
+        </div>
+        <div class="image">
+            <img class="" *ngIf="!imgProfileTemp.length" [src]='imgProfile' [alt]='user?.userName'>
+            <img class="" *ngIf="imgProfileTemp" [src]='imgProfileTemp' [alt]='user?.userName'>
+        </div>
+        <div class="btn-select-image">
+            <label for="selectImage">Seleccionar imagen</label>
+            <input type="file" id="selectImage" name="selectImage" accept=".jpg, .jpeg, .png"
+                (change)="readFile($event)">
+        </div>
+    </div>
+    <div class="form-profile">
+
+    </div>
+</div>
+
+
+
+<!-- <div class="" *ngIf="!loading">
+    <div class="">
+        <div class="">
+            <div class="">
                 <img *ngIf="!imgProfileTemp.length" [src]='imgProfile' class="card-img" [alt]='user?.userName'>
                 <img *ngIf="imgProfileTemp" [src]='imgProfileTemp' class="card-img" [alt]='user?.userName'>
             </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title"> <strong> {{ user?.userName }} </strong> </h5>
-                    <p class="card-text"> <strong>Email:</strong> {{ user?.email }} </p>
-                    <p class="card-text"><small class="text-muted"> <strong>Uid:</strong> {{ user?.uid }}</small></p>
+            <div class="">
+                <div class="">
+                    <h5 class=""> <strong> {{ user?.userName }} </strong> </h5>
+                    <p class=""> <strong>Email:</strong> {{ user?.email }} </p>
+                    <p class=""><small class=""> <strong>Uid:</strong> {{ user?.uid }}</small></p>
                 </div>
             </div>
         </div>
@@ -20,14 +44,14 @@
         </div>
     </div>
     
-</div>
+</div> -->
 
-<div *ngIf="loading" class="col-7 mx-auto alert alert-info text-center" role="alert">
-    <h4 class="alert-heading">Cargando...</h4>
-    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-        <span class="sr-only">Loading...</span>
+<div *ngIf="loading" class="" role="alert">
+    <h4 class="">Cargando...</h4>
+    <div class="" role="status">
+        <span class="">Loading...</span>
     </div>
-    <p class="mb-0">
+    <p class="">
         Espere por favor.
     </p>
 </div>
