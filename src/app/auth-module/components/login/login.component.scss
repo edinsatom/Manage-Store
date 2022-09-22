@@ -1,6 +1,97 @@
+.container {
+    display: flex;
+    font-size: 1.6rem;
+    height: 100vh;
+}
+
+.left-side {
+    flex-grow: 0;
+    background-color: aquamarine;
+}
+
+.right-side {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.form {
+	display: flex;
+	flex-direction: column;
+	width: 50%;
+	align-items: center;
+    gap: 2rem;
+}
+
+.form-item {
+	display: flex;
+	flex-direction: column;
+}
+
+.form-item > label {
+    font-weight: 600;
+}
+
+.form-item div {
+    height: 3rem;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 2px 4px;
+    background-color: rgb(248, 248, 248);
+}
+
+.form-item input[type="text"], input[type="password"] {
+    appearance: none;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-size: 1.6rem;
+    width: 100%;
+}
+
+.form-item-inline {
+    display: flex;
+    gap: 1rem;
+    font-size: 1.8rem;
+    align-items: center;
+}
+
+.form-item-inline input[type="checkbox"]{
+    height: 2rem;
+    width: 2rem;
+}
+
+.login-button {
+	height: 3.4rem;
+	background: dodgerblue;
+	font-size: 1.6rem;
+	cursor: pointer;
+	color: whitesmoke;
+	font-weight: bold;
+    padding: 0 1.6rem;
+}
+
+
 .haveAccount {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1.2rem;
+}
+
+.haveAccount span {
+    font-weight: 600;
+}
+
+.haveAccount a {
+    text-decoration: none;
+    font-weight: 600;
+    color: blue;
+}
+
+@media (min-width:1024px) {
+    .left-side {
+        flex-grow: 4;
+    }
 }

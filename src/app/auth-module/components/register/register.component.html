@@ -1,60 +1,45 @@
-<div class="container mt-5">
-    <form [formGroup]="registerForm" (ngSubmit)="register()">
-        <div class="col-3 mx-auto">
+<div class="container">
+    <div class="left-side"></div>
+    <div class="right-side">
+        <form class="form" [formGroup]="registerForm" (ngSubmit)="register()">
+            <div class="form-item">
+                <label for="field_user">Usuario</label>
+                <div>
+                    <input class="form-control" formControlName="userName" type="text" name="field_user"
+                        aria-describedby="userHelp">
+                </div>
+                <div *ngIf="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched"
+                    class="invalid">
+                    Por favor escribe un nombre!
+                </div>
+            </div>
 
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="field_user">Usuario</label>
-                    <input 
-                        class="form-control" 
-                        formControlName="userName"
-                        type="text" name="field_user" 
+            <div class="form-item">
+                <label for="field_user">Email</label>
+                <div>
+                    <input class="form-control" formControlName="email" type="text" name="field_user"
                         aria-describedby="emailHelp">
-                    <div *ngIf="registerForm.get('userName')?.invalid && registerForm.get('userName')?.touched" class="invalid">
-                        Por favor escribe un nombre!
-                    </div>
+                </div>
+                <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="invalid">
+                    Por favor escribe un email
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="field_user">Email</label>
-                    <input 
-                        class="form-control" 
-                        formControlName="email"
-                        type="text" name="field_user" 
-                        aria-describedby="emailHelp">
-                    <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="invalid">
-                        Por favor escribe un email
-                    </div>
+            <div class="form-item">
+                <label for="field_password">Contraseña</label>
+                <div>
+                    <input formControlName="password" type="password" name='field_password' class="form-control">
+                </div>
+                <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched"
+                    class="invalid">
+                    Por favor escribe una contraseña!
                 </div>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="field_password">Contraseña</label>
-                    <input 
-                        formControlName="password"
-                        type="password" 
-                        name='field_password'
-                        class="form-control">
-                    <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="invalid">
-                        Por favor escribe una contraseña!
-                    </div>
-                </div>
-            </div>
-
-            <button 
-                class="btn btn-primary w-100" 
-                *ngIf="!isLoading"
-                type="submit">Registrar usuario
+            <button class="login-button" *ngIf="!isLoading" type="submit">Registrar usuario
             </button>
 
-            <button 
-                class="btn btn-primary w-100" 
-                [disabled]="true"
-                *ngIf="isLoading"
-                type="button">
+            <button class="btn btn-primary w-100" [disabled]="true" *ngIf="isLoading" type="button">
                 Por favor espere
             </button>
 
@@ -62,7 +47,6 @@
                 <div>¿Ya tienes una cuenta?</div>
                 <a [routerLink]="['/login']">Login</a>
             </div>
-
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

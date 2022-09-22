@@ -24,14 +24,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     private authFacade: AuthFacade,
   ) {
     this.loginForm = this.fb.group({
-      email:    ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   ngOnInit(): void {
     this.subs = this.uiFacade.getLoading().pipe(
-      tap( resp => this.isLoading = resp )
+      tap(resp => this.isLoading = resp)
     ).subscribe()
   }
 
@@ -41,19 +41,19 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   loginUser() {
 
+    console.log(this.loginForm.value);
+    
     if (this.loginForm.invalid) return;
 
-    const { email, password } = this.loginForm.value;    
+    const { email, password } = this.loginForm.value;
 
     this.authFacade.loginUser(email, password)
-      .then(( resp: boolean ) => {
-        if(resp) this.router.navigate(['/products'])
+      .then((resp: boolean) => {
+        if (resp) this.router.navigate(['/products'])
       })
       .catch((err) => {
         Swal.fire('Opps!!!', err.message, 'error')
-
       })
-
   }
 
 }
