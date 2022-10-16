@@ -1,27 +1,20 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-5">
-    <a class="navbar-brand" href="#">Catalogo</a>
+<nav class="header">
+    <div>
+        <img class="store_image" src="../../../../assets/store.png" alt="Store">
+    </div>
 
-    <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" *ngIf="isAuthenticate" [routerLink]="['/products']" routerLinkActive="active">Productos</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" *ngIf="isAuthenticate" [routerLink]="['/profile']" routerLinkActive="active">Perfil</a>
-            </li>
-        </ul>
-        <span class="navbar-text">
-            <button
-                *ngIf="!isAuthenticate"
-                (click)='login()' type="button" class="btn btn-primary">
-                Log in
-            </button>
+    
+    <div class="buttons">
+        <button ngClass="btn btn_login"
+            *ngIf="!isAuthenticate"
+            (click)='login()' type="button">
+            Login
+        </button>
 
-            <button
-                *ngIf="isAuthenticate"
-                 (click)='logout()' type="button" class="btn btn-danger">
-                Log out
-            </button>            
-        </span>
+        <button class="btn btn_logout"
+            *ngIf="isAuthenticate"
+             (click)='logout()' type="button">
+            Logout
+        </button>            
     </div>
 </nav>

@@ -1,22 +1,10 @@
-.navbar {
-    display: flex;
-    height: 10vh;
-    background: aquamarine;
-}
 
 .container {
     display: flex;
     height: 80vh;
-    // background: darkslateblue;
     gap: .5vw;
 }
 
-.container-panel {
-    display: flex;
-    height: 100%;
-    width: 20vw;
-    background: lightgray;
-}
 
 .container-articles {
     display: grid;

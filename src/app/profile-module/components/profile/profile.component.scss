@@ -1,7 +1,22 @@
 .container {
     display: flex;
+    height: 90vh;
+    // gap: .5vw;
+}
+
+.menu {
+    height: 90vh;
+    width: 15vw;
+    background: #d3d3d3;
+}
+
+.profile_container {
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    height: 90vh;
+    width: 85vw;
+    margin-top: 10vh;
     font-size: 1.2rem;
     position: relative;
 }

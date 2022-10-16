@@ -1,5 +1,108 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
 
+h1 {
+    font-size: 2rem;
+    align-self: center;
+}
 
-.list-container { 
-    height: 350px
+hr {
+    width: 96%;
+}
+
+.form-filter {
+    display: flex;
+    justify-content: space-between;
+    width: 92%;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    font-weight: bold;
+    border-radius: 4px;
+    border: none;
+    margin-right: .5rem;
+}
+
+.btn-primary {
+    background-color: rgb(11, 179, 53);
+    color: white;
+}
+
+.btn-info {
+    padding: 1rem;
+    background-color: rgb(38, 137, 218);
+    color: white;
+}
+
+.btn-danger {
+    padding: 1rem;
+    background-color: rgb(218, 38, 38);
+    color: white;
+}
+
+.list-container {
+    height: 70vh;
+    width: 96%;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 2px solid black;
+}
+
+.table {
+    table-layout: fixed;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.thead {
+    height: 4rem;
+    font-size: 1.4rem;
+}
+
+.thead-dark {
+    background-color: black;
+    color: white;
+}
+
+.tbody {
+    font-size: 1.2rem;
+}
+
+.tbody > tr {
+    height: 6rem;
+    border-bottom: .5px solid black;
+}
+
+.tbody > tr:nth-child(odd) {
+    background-color: lightgray;
+}
+
+.sorted {
+    cursor: pointer;
+}
+
+.badge {
+    padding: .75rem;
+    border-radius: 4px;
+    color: white;
+    font-weight: bold;
+}
+
+.badge-danger {
+    background-color: rgb(255, 0, 0);
+}
+
+.badge-success {
+    background-color: rgb(34, 163, 88);
 }
