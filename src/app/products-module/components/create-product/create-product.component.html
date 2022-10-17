@@ -1,98 +1,82 @@
-<div class="col text-right mb-3">
-  <button routerLink="/products" type="button" class="btn btn-danger">
-    Cerrar
-  </button>
-</div>
+<div class="container">
 
-<hr>
-
-<div>
-  <form [formGroup]="productForm" (ngSubmit)='save( )' class='container mt-4'>
-
-    <div class="form-row">
-      <div class="col-md-9"></div>
-      <div class="form-group col-md-3">
-        <label for='id'>ID</label>
-        <input formControlName="id" name='id' type="text" class="form-control" placeholder="Product id">
-      </div>
+  <div class="image-product">
+    <div class="label-image">
+      <span>Imagen del producto</span>
     </div>
-
-    <div class="form-row mt-3">
-
-      <div class="form-row col-md-12">
-        <div class="form-group col-6">
-          <label for='name'>Producto</label>
-          <input formControlName="name" name='name' type="text" class="form-control" placeholder="Nombre de Producto">
-          <span *ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid" class='invalid'>Debe
-            ingresar un nombre de producto</span>
-        </div>
-
-        <div class="col-1"></div>
-
-        <div class="form-group col-5">
-          <label for='imageFile'>Imagen</label>
-          <input name='imageFile' class="col" type="file" accept=".jpg, .png" (change)="readFile($event)">
-          <span *ngIf="productForm.get('file')?.touched && productForm.get('file')?.invalid" class='invalid'>{{
-            errorArchivo }} </span>
-        </div>
-
-      </div>
-
-      <div class="row no-gutters">
-
-        <div class="form-group col-8">
-          <label for='details'>Detalles</label>
-          <textarea formControlName="details" name='details' class="form-control" placeholder="Detalles" rows="5">
-            </textarea>
-          <span *ngIf="productForm.get('details')?.touched && productForm.get('details')?.invalid" class='invalid'>Debe
-            ingresar una descripción del producto
-          </span>
-        </div>
-
-        <div class="form-group col-md-6">
-          <label for='origen'>Pais de origen</label>
-          <select formControlName="country" name='country' class="form-control">
-            <option selected>Pais de origen</option>
-            <option *ngFor="let item of countriesList">{{ item }}</option>
-          </select>
-          <span *ngIf="productForm.get('country')?.touched && productForm.get('country')?.invalid" class='invalid'>Debe
-            seleccionar un pais de procedencia.</span>
-        </div>
-
-      </div>
-
-      <div class="col-md-3">
-        <label for="">Imagen del producto</label>
-        <img *ngIf="!imgProductTemp.length && imgProduct?.length" [src]='imgProduct' class="card-img" [alt]=''>
-        <img *ngIf="imgProductTemp" [src]='imgProductTemp' class="card-img" [alt]='productForm.get("name")?.value'>
-      </div>
+    <div class="image">
+      <img *ngIf="!imgProductTemp.length && imgProduct?.length" [src]='imgProduct' class="card-img" [alt]=''>
+      <img *ngIf="imgProductTemp" [src]='imgProductTemp' class="card-img" [alt]='productForm.get("name")?.value'>
     </div>
+    <div class="btn-select-image">
+      <label for="selectImage">Seleccionar imagen</label>
+      <input type="file" id="selectImage" name="selectImage" accept=".jpg, .jpeg, .png" (change)="readFile($event)">
+      <span *ngIf="productForm.get('file')?.touched && productForm.get('file')?.invalid" class='invalid'>{{
+        errorArchivo }} </span>
+    </div>
+  </div>
 
-    <div class="form-row mt-3">
+  <div class="form-product" [formGroup]="productForm">
 
-      <div class="col-md-3 mx-auto">
+    <div class="form-group-row">
+
+      <div class="form-item">
+        <label for='name'>Producto</label>
+        <div>
+          <input formControlName="name" name='name' type="text" class="" placeholder="Nombre de Producto">
+        </div>
+        <span *ngIf="productForm.get('name')?.touched && productForm.get('name')?.invalid" class='invalid'>Debe
+          ingresar un nombre de producto</span>
+      </div>
+      <div class="form-item">
         <label for='precio'>Precio</label>
-        <input formControlName="price" name='price' type="number" class="form-control text-right" placeholder="Precio">
+        <div>
+          <input formControlName="price" name='price' type="number" class="" placeholder="Precio">
+        </div>
         <span *ngIf="productForm.get('price')?.touched && productForm.get('price')?.invalid" class='invalid'>El precio
           mínimo es: </span>
       </div>
-
-        <div class="col-md-3 mx-auto">
-          <label for='existencia'>Existencia</label>
-          <input formControlName="stock" name='stock' type="number" class="form-control text-right"
-            placeholder="Existencia">
-          <span *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid" class='invalid'>Debe
-            ingresar cantidad valida</span>
-        </div>
-
-        <div *ngIf="idProduct == 'new'" class="col-md-6 mt-4">
-          <button type="submit" class="btn btn-primary w-100 m-2">Guardar</button>
-        </div>
-
-        <div *ngIf="idProduct != 'new'" class="col-md-6 mt-4">
-          <button type="submit" class="btn btn-warning w-100 m-2">Update</button>
-        </div>
-
     </div>
-  </form>
+
+    <div class="form-group-row">
+
+      <div class="form-item">
+        <label for='origen'>Pais de origen</label>
+        <div class="p-4">
+          <select formControlName="country" name='country'>
+            <option selected>Pais de origen</option>
+            <option *ngFor="let item of countriesList">{{ item }}</option>
+          </select>
+        </div>
+        <span *ngIf="productForm.get('country')?.touched && productForm.get('country')?.invalid" class='invalid'>Debe
+          seleccionar un pais de procedencia.</span>
+      </div>
+      <div class="form-item">
+        <label for='existencia'>Existencia</label>
+        <div>
+          <input formControlName="stock" name='stock' type="number" class="" placeholder="Existencia">
+        </div>
+        <span *ngIf="productForm.get('stock')?.touched && productForm.get('stock')?.invalid" class='invalid'>Debe
+          ingresar cantidad valida</span>
+      </div>
+    </div>
+
+    <div class="form-item">
+      <label for="description">Descripción</label>
+      <div>
+        <textarea name="description" id="description" cols="28" rows="8"
+          placeholder="Descripción del producto"></textarea>
+      </div>
+    </div>
+
+
+    <div class="area-buttons">
+      <input *ngIf="idProduct != 'new'" type="button" class="btn btn-remove" value="Retirar producto">
+      <input *ngIf="idProduct == 'new'" type="button" class="btn btn-save" value="Ingresar producto">
+      <input *ngIf="idProduct != 'new'" type="button" class="btn btn-update" value="Actualizar producto">
+      <input type="button" class="btn btn-cancel" value="Cancelar" routerLink="/products">
+    </div>
+
+  </div>
+
 </div>

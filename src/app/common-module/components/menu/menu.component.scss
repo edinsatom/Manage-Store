@@ -1,0 +1,23 @@
+.menu-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-options > li {
+    display: inline-block;
+    border: 1px solid black;
+    line-height: 4rem;
+    padding-left: 8px;
+    background-color: #3f3f3f;
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: whitesmoke;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.menu-options li:hover {
+    background: whitesmoke;
+    color: #3f3f3f;
+}

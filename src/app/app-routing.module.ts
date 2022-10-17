@@ -7,13 +7,15 @@ import { RegisterComponent } from './auth-module/components/register/register.co
 import { ProfileComponent } from './profile-module/components/profile/profile.component';
 
 import { AuthGuard } from './common-module/guards/guard.guard';
+import { CatalogComponent } from './catalog-module/components/catalog/catalog.component';
 
 
 const routes: Routes = [
+  { path: '', component: CatalogComponent },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   {
-    path: '',
+    path: 'products',
     canLoad: [ AuthGuard ],
     loadChildren: () => import('./products-module/products.module').then( m => m.ProductsModule )
   },

@@ -1,33 +1,88 @@
-<app-navbar></app-navbar>
-<div class="col-7 m-5 mx-auto" *ngIf="!loading">
-    <div class="card mb-3" style="max-width: 540px;">
-        <div class="row no-gutters">
-            <div class="col-md-4">
-                <img *ngIf="!imgProfileTemp.length" [src]='imgProfile' class="card-img" [alt]='user?.userName'>
-                <img *ngIf="imgProfileTemp" [src]='imgProfileTemp' class="card-img" [alt]='user?.userName'>
+<nav>
+    <app-navbar [isAuthenticate]="true"></app-navbar>
+</nav>
+<main class="container">
+    <aside class="menu">
+        <app-menu [isAuthenticate]="true"></app-menu>
+    </aside>
+    <section>
+
+        <div *ngIf="!loading" class="profile_container">
+            <div class="image-profile">
+                <div class="label-image">
+                    <span>Imagen del perfil</span>
+                </div>
+                <div class="image">
+                    <img class="" *ngIf="!imgProfileTemp.length" [src]='imgProfile' [alt]='user?.userName'>
+                    <img class="" *ngIf="imgProfileTemp" [src]='imgProfileTemp' [alt]='user?.userName'>
+                </div>
+                <div class="btn-select-image">
+                    <label for="selectImage">Seleccionar imagen</label>
+                    <input type="file" id="selectImage" name="selectImage" accept=".jpg, .jpeg, .png"
+                        (change)="readFile($event)">
+                </div>
             </div>
-            <div class="col-md-8">
-                <div class="card-body">
-                    <h5 class="card-title"> <strong> {{ user?.userName }} </strong> </h5>
-                    <p class="card-text"> <strong>Email:</strong> {{ user?.email }} </p>
-                    <p class="card-text"><small class="text-muted"> <strong>Uid:</strong> {{ user?.uid }}</small></p>
+            <div class="form-profile">
+                <div class="form-item">
+                    <label for="name">Nombre</label>
+                    <div>
+                        <input type="text" name="name" id="name" placeholder="Nombre" [value]="user?.userName">
+                    </div>
+                </div>
+                <div class="form-group-row">
+                    <div class="form-item">
+                        <label for="email">Correo electrónico</label>
+                        <div>
+                            <input type="text" name="email" id="email" placeholder="Correo electrónico">
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <label for="phone">Teléfono de contacto</label>
+                        <div>
+                            <input type="tel" name="phone" id="phone" placeholder="Telefono de contacto">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label for="aboutMe">Sobre mí</label>
+                    <div>
+                        <textarea name="aboutMe" id="aboutMe" cols="30" rows="10" placeholder="Sobre mi"></textarea>
+                    </div>
+                </div>
+                <div class="area-buttons">
+                    <input type="button" class="btn btn-save" value="Guardar" (click)="updateProfile()">
+                    <input type="button" class="btn btn-cancel" value="Cancelar">
                 </div>
             </div>
         </div>
-        <div>
-            <input type="file" name="imgProfile" id="imgProfile" value="Seleccionar archivo" (change)="readFile($event)">
-            <input type="button" value="Actualizar imangen"  (click)="uploadFile()">
+        
+        
+        <div *ngIf="loading" class="loading">
+            <h4 class="title">Cargando...</h4>
+            <div class="message">
+                <span class="">Esperate un momentico...</span>
+            </div>
         </div>
-    </div>
+        
+        
+        <div *ngIf="showNotification" class="alert-screen">
+            <div class="alert-window">
+                <div class="alert-title">
+                    {{ notification?.title }}
+                </div>
+                <div class="alert-body">
+                    {{ notification?.message }}
+                </div>
+                <div class="alert-footer">
+                    {{ notification?.footer }}
+                </div>
+                <div class="alert-buttons">
+                    <input type="button" value="Ok" (click)="showNotification = false">
+                </div>
+            </div>
+        </div>
     
-</div>
+    </section>
+</main>
 
-<div *ngIf="loading" class="col-7 mx-auto alert alert-info text-center" role="alert">
-    <h4 class="alert-heading">Cargando...</h4>
-    <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-        <span class="sr-only">Loading...</span>
-    </div>
-    <p class="mb-0">
-        Espere por favor.
-    </p>
-</div>
+

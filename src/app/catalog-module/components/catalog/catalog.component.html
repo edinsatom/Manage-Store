@@ -1,0 +1,22 @@
+<nav >
+    <app-navbar></app-navbar>
+</nav>
+<main class="container">
+    <aside>
+        <app-sidebar></app-sidebar>
+    </aside>
+    <section class="container-articles">
+        <article *ngFor="let item of [1, 2, 3, 4, 5, 6, 7]" class="product-item">
+            <picture class="product-image"></picture>
+            <div class="product-description">
+                <h4 class="title">Nombre del producto</h4>
+                <span class="text">Descripción del producto con un texto mas extenso</span>
+                <h4 class="price">Precio: $48.300</h4>
+            </div>
+        </article>
+        
+    </section>
+</main>
+<footer class="footer">
+
+</footer>

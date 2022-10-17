@@ -1,59 +1,43 @@
-<div class="container mt-5">
-    <form [formGroup]="loginForm" (ngSubmit)="loginUser()">
-        <div class="col-3 mx-auto">
-
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="field_user">Email</label>
-                    <input 
-                        class="form-control" 
-                        formControlName="email"
-                        type="text" name="field_user" 
-                        aria-describedby="emailHelp">
-                    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="invalid">
-                        Debes ingrear un correo válido!
-                    </div>
+<div class="container">
+    <div class="left-side"></div>
+    <div class="right-side">
+        <form class="form" (ngSubmit)="loginUser()" [formGroup]="loginForm">
+            <div class="form-item">
+                <label for="field_user">Email</label>
+                <div>
+                    <input class="" formControlName="email" type="text" name="field_user" aria-describedby="emailHelp">
                 </div>
+                <span *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" class="invalid">
+                    Debes ingrear un correo válido!
+                </span>
             </div>
 
-            <div class="form-row">
-                <div class="form-group col">
-                    <label for="field_password">Contraseña</label>
-                    <input 
-                        formControlName="password"
-                        type="password" 
-                        name='field_password'
-                        class="form-control">
-                    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="invalid">
-                        Por favor escribe una contraseña!
-                    </div>
+            <div class="form-item">
+                <label for="field_password">Contraseña</label>
+                <div>
+                    <input formControlName="password" type="password" name='field_password' class="">
                 </div>
+                <span *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="invalid">
+                    Por favor escribe una contraseña!
+                </span>
             </div>
 
-            <div class="form-group form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label ml-1" for="exampleCheck1">Recordar usuario</label>
+            <div class="form-item-inline">
+                <input type="checkbox" class="" id="exampleCheck1">
+                <label class="" for="exampleCheck1">Recordar usuario</label>
             </div>
 
-            <button 
-                class="btn btn-primary w-100" 
-                *ngIf="!isLoading"
-                type="submit">Loguear usuario
+            <button class="login-button" *ngIf="!isLoading" type="submit">Loguear usuario
             </button>
 
-            <button 
-                class="btn btn-primary w-100" 
-                [disabled]="true"
-                *ngIf="isLoading"
-                type="button">
+            <button class="login-button" [disabled]="true" *ngIf="isLoading" type="button">
                 Por favor espere
             </button>
 
             <div class="haveAccount">
-                <div>¿No tienes cuenta?</div>
+                <span>¿No tienes cuenta?</span>
                 <a [routerLink]="['/register']">Registrate</a>
             </div>
-
-        </div>
-    </form>
+        </form>
+    </div>
 </div>

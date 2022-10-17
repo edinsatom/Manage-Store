@@ -21,6 +21,7 @@ import { environment } from 'src/environments/environment';
 import { AuthModule } from './auth-module/auth-module.module';
 import { appReducers } from './app.reducer';
 import { ProfileModule } from './profile-module/profile.module';
+import { CatalogModule } from './catalog-module/catalog.module';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { ProfileModule } from './profile-module/profile.module';
     BrowserModule,
     FormsModule,
     AuthModule,
+    CatalogModule,
     ProfileModule,
     ReactiveFormsModule,
     ScrollingModule,

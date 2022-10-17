@@ -11,7 +11,7 @@ export const routes: Routes = [
     component: BaseComponent, 
     children: [
         { path: '', component: ProductsComponent },
-        { path: 'product/:id', component: CreateProductComponent }
+        { path: ':id', component: CreateProductComponent }
     ]
  },
     

@@ -1,0 +1,52 @@
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 20vw;
+    background: lightgray;
+}
+
+.sidebar_profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+    gap: 12px;
+    border-bottom: 2px solid black;
+}
+
+.sidebar_profile > img {
+    width: 70%;
+    height: 70%;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 12%;
+}
+
+.sidebar_filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100;
+    height: 50%;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.buttons {
+    align-self: flex-end;
+    padding: 0 40px;
+}
+
+#search {
+    width: 100px;
+}

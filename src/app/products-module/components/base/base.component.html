@@ -1,6 +1,13 @@
-<app-navbar></app-navbar>
-<div class="m-5">
+<nav>
+    <app-navbar [isAuthenticate]="true"></app-navbar>
+</nav>
+<main class="container">
+    <aside class="menu">
+        <app-menu [isAuthenticate]="true"></app-menu>
+    </aside>
+    <section class="products">
 
-    <router-outlet></router-outlet>
-
-</div>
+        <router-outlet></router-outlet>
+    
+    </section>
+</main>

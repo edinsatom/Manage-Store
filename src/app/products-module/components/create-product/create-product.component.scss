@@ -1,0 +1,256 @@
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+.image-product {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.label-image {
+    width: 90%;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+.image {
+    height: 318px;
+    min-width: 90%;
+    max-width: 90%;
+    border-radius: 12px;
+    border: 1px solid;
+    padding: 16px;
+}
+
+.image img {
+    width: 100%;
+    border-radius: 12px;
+    max-height: 280px;
+}
+
+.btn-select-image {
+    margin-top: 12px;
+    max-width: 90%;
+    text-align: center;
+}
+
+.btn-select-image>label {
+    padding: 4px 8px;
+    border: 1px solid black;
+    background-color: #2ad4ffff;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+input[type='file'] {
+    opacity: 0;
+}
+
+
+.form-product {
+    display: flex;
+    height: 400px;
+    flex-direction: column;
+    align-items: center;
+    max-width: 800px;
+    gap: 1rem;
+}
+
+.form-group-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    width: 90%;
+}
+
+.form-group-row :nth-child(1){
+    flex: 2.5 1;
+}
+
+.form-group-row :nth-child(2){
+    flex: 1 2.5;
+}
+
+.form-item {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+}
+
+.form-item > label {
+    font-weight: 600;
+    padding: 4px;
+}
+
+.form-item div {
+    // height: 3rem;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding: 2px 4px;
+    background-color: rgb(248, 248, 248);
+}
+
+.form-item input[type="text"],
+input[type="number"],
+textarea {
+    appearance: none;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-size: 1.6rem;
+    width: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-item > .p-4 {
+    padding: 4px;
+}
+
+input[type="number"] {
+    text-align: right;
+
+    -moz-appearance: textfield;
+}
+
+select {
+    appearance: none;
+    background: none;
+    border: none;
+    width: 100%;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.area-buttons {
+    display: flex;
+    justify-content: end;
+    width: 90%;
+    
+    gap: 20px;
+}
+
+.btn {
+    padding: 4px 16px;
+    width: 160px;
+    border: 1px solid black;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.btn-remove {
+    background: #333333ff;
+    color: #dbe2e3ff;
+}
+
+.btn-save {
+    background-color: #2ad4ffff;
+    color: #333333ff;
+}
+
+.btn-update {
+    background: orange;
+    color: #333333ff;
+}
+
+.btn-cancel {
+    background-color: #dbe2e3ff;
+    color: #333333ff;
+}
+
+.loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 10vh;
+    padding: 8px;
+    gap: 16px;
+
+    background-color: #dbe2e3ff;
+    color: #333333ff;
+}
+
+.loading >.title {
+    font-size: 2.2rem;
+}
+
+.loading >.message {
+    font-size: 1.4rem;
+}
+
+.alert-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 650px;
+    border-radius: 8px;
+
+    right: 0;
+    left: 0;
+    margin-left: auto;
+    margin-right: auto;
+    top: 0;
+
+    position: absolute;
+}
+
+.alert-window {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 300px;
+    width: 400px;
+    background-color: #dbe2e3ff;
+    border: 2px solid black;
+    border-radius: 12px;
+}
+
+.alert-window .alert-title {
+    margin: 2rem 0;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.alert-window .alert-body {
+    margin: 4rem 0;
+    font-size: 1.6rem;
+}
+
+.alert-window .alert-footer {
+
+}
+
+.alert-window .alert-buttons > input[type='button'] {
+    width: 100px;
+    padding: 4px 16px;
+    border: 1px solid black;
+    margin: 8px 0;
+    border-radius: 8px;
+    font-weight: bold;
+    color: #dbe2e3ff;
+    background: #333333ff;
+    cursor: pointer;
+}
+
+@media (max-width:'600px') {
+    .form-group-row {
+        flex-direction: column;
+        width: 100%;
+    }
+}

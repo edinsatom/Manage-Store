@@ -1,0 +1,8 @@
+<div id="navbarText">
+    <ul class="menu-options">
+        <li class="nav-link" *ngIf="isAuthenticate" [routerLink]="['/products']" routerLinkActive="active">Productos
+        </li>
+        <li class="nav-link" *ngIf="isAuthenticate" [routerLink]="['/profile']" routerLinkActive="active">Perfil
+        </li>
+    </ul>
+</div>
