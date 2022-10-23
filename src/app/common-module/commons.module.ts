@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RouterModule } from '@angular/router';
 import { MenuComponent } from './components/menu/menu.component';
+import { ModalComponent } from './components/modal/modal.component';
 
 
 
@@ -10,6 +11,7 @@ import { MenuComponent } from './components/menu/menu.component';
   declarations: [
     NavbarComponent,
     MenuComponent,
+    ModalComponent,
   ],
   imports: [
     CommonModule,
@@ -18,6 +20,7 @@ import { MenuComponent } from './components/menu/menu.component';
   exports: [
     NavbarComponent,
     MenuComponent,
+    ModalComponent,
   ]
 })
 export class CommonsModule { }

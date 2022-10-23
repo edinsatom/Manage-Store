@@ -53,7 +53,7 @@
                         <button [routerLink]="['/products', product.uid]" class="btn btn-info">
                             Editar
                         </button>
-                        <button (click)='deleteProduct( product )' class="btn btn-danger">
+                        <button (click)='showModalConfirm( product )' class="btn btn-danger">
                             Borrar
                         </button>
                     </td>
@@ -79,3 +79,5 @@
         </p>
     </div>
 </div>
+
+<cc-modal #modal (response)="deleteProd($event)"></cc-modal>

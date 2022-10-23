@@ -1,34 +1,41 @@
 import { Injectable } from '@angular/core';
 import { IUserModel } from '../../common-module/models/user.model';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { Observable } from 'rxjs';
-import 'firebase/firestore'
-import firebase from "firebase/compat/app";
+import {
+  createUserWithEmailAndPassword,
+  getAuth,
+  signInWithEmailAndPassword,
+  signOut,
+  User,
+  UserCredential
+} from "firebase/auth"
+import { authState } from '@angular/fire/auth'
+import { initializeApp } from 'firebase/app';
+import { environment } from '@root/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(
-    private auth: AngularFireAuth
-  ) { }
+  private app = initializeApp(environment.firebaseConfig);
+  private auth = getAuth(this.app);
 
-  authListener(): Observable<firebase.User | null>{
-    return this.auth.authState
+  authListener(): Observable<User | null> {
+    return authState(this.auth)
   }
 
-  createUser(userData: IUserModel, password: string): Promise<firebase.auth.UserCredential> {
-    return this.auth.createUserWithEmailAndPassword(userData.email, password)
+  createUser(userData: IUserModel, password: string): Promise<UserCredential> {
+    return createUserWithEmailAndPassword(this.auth, userData.email, password)
   }
 
-  loginUser(email: string, password: string): Promise<any> {
-    return this.auth.signInWithEmailAndPassword(email, password);
+  loginUser(email: string, password: string): Promise<UserCredential> {
+    return signInWithEmailAndPassword(this.auth, email, password);
   }
 
-  logoutUser(): Promise<any> {
+  logoutUser(): Promise<void> {
 
-    return this.auth.signOut();
+    return signOut(this.auth);
   }
 
 }

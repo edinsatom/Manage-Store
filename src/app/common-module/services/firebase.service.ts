@@ -11,9 +11,6 @@ export class FirebaseService {
   private firebaseApp = getApp();
   private fbStorage = getStorage(this.firebaseApp, `gs://${environment.firebaseConfig.storageBucket}`)
 
-  constructor(
-  ) { }
-
   /**
    * This function allow upload a file to app storage.
    * 

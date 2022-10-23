@@ -1,14 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-
-
-import Swal from 'sweetalert2';
 
 import { ProductsFacade } from '@products-module/facades/products.facade';
 import { Subscription, tap } from 'rxjs';
 import { CountriesService } from '@common-services/countries.service';
 import { ProductFile } from '@products-module/models/file.model';
+import { ModalComponent } from '@root/app/common-module/components/modal/modal.component';
 
 
 @Component({
@@ -17,6 +15,8 @@ import { ProductFile } from '@products-module/models/file.model';
   styleUrls: ['./create-product.component.scss']
 })
 export class CreateProductComponent implements OnInit, OnDestroy {
+
+  @ViewChild('modal') modal!: ModalComponent;
 
   productForm: FormGroup;
   countriesList: any[] = [];
@@ -42,8 +42,8 @@ export class CreateProductComponent implements OnInit, OnDestroy {
       name: ['', [Validators.required, Validators.minLength(4)]],
       details: ['', [Validators.required]],
       country: ['', [Validators.required]],
-      stock: [, [Validators.required, Validators.min(1)]],
-      price: [, [Validators.required, Validators.min(2000)]],
+      stock: ['', [Validators.required, Validators.min(1)]],
+      price: ['', [Validators.required, Validators.min(2000)]],
       image: ['', []]
     })
   }
@@ -87,7 +87,7 @@ export class CreateProductComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subs.map(x => x.unsubscribe());
+    this.subs.forEach(x => x.unsubscribe());
     this.subs = [];
   }
 
@@ -128,13 +128,13 @@ export class CreateProductComponent implements OnInit, OnDestroy {
         return
         
       } catch (error: any) {
-        Swal.fire('Error!!!', error, 'error');
+        this.modal.showModal('Error!!!', error, 'error');
       }
     }
     else {
       this.productFacade.updateProduct(uid, itemId, this.productForm.value)
-      .then(() => Swal.fire('Exito!!!', 'Producto actualizado con éxito.', 'success'))
-      .catch((err: any) => { Swal.fire('Oppsss!!', err.message, 'error') })
+      .then(() => this.modal.showModal('Exito!!!', 'Producto actualizado con éxito.', 'success'))
+      .catch((err: any) => { this.modal.showModal('Oppsss!!', err.message, 'error') })
     }
   }
 
@@ -167,11 +167,11 @@ export class CreateProductComponent implements OnInit, OnDestroy {
             await this.updateRecordAndImage(file, relativePath, uid, itemId);
 
           } catch (error: any) {
-            Swal.fire('Error!!!', error, 'error');
+            this.modal.showModal('Error!!!', error, 'error');
           }
 
         })
-        .catch(rej => Swal.fire('Error!!!', rej.message, 'error'))
+        .catch(rej => this.modal.showModal('Error!!!', rej.message, 'error'))
     }
 
   }
@@ -187,15 +187,15 @@ export class CreateProductComponent implements OnInit, OnDestroy {
             }
             this.productFacade.updateProduct(uid, itemId, updateRecord)
               .then((res: any) => {
-                Swal.fire('Éxito!!!', 'Registro guardado', 'success');
+                this.modal.showModal('Éxito!!!', 'Registro guardado', 'success');
               })
               .catch((rej: any) => {
-                Swal.fire('Error!!!', rej.message, 'error');
+                this.modal.showModal('Error!!!', rej.message, 'error');
               })
           })
-          .catch(rej => Swal.fire('Error!!!', rej.message, 'error'))
+          .catch(rej => this.modal.showModal('Error!!!', rej.message, 'error'))
       })
-      .catch(rej => Swal.fire('Error!!!', rej.message, 'error'))
+      .catch(rej => this.modal.showModal('Error!!!', rej.message, 'error'))
     // this.productForm.reset();
   }
 

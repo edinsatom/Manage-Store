@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { FirestoreService } from 'src/app/common-module/services/firestore.service';
 import { UiFacade } from 'src/app/common-module/facades/ui-facade';
 import { Observable, Subscription } from 'rxjs';
-import { tap, map } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/app.reducer';
 import * as actions from 'src/app/auth-module/store/auth.actions';
@@ -33,8 +33,7 @@ export class AuthFacade {
     this.authService.authListener().pipe(
       tap((resp: any) => {
         if (!!resp) {
-          const { user } = resp.multiFactor;
-          this.subs = this.firestoreService.subscribeToDoc(`${user.uid}${this.collection}`).pipe(
+          this.subs = this.firestoreService.subscribeToDoc(`${resp.uid}${this.collection}`).pipe(
             tap((resp: any) => {
               this.store.dispatch(actions.setUser({ user: { ...resp } }))
             })
