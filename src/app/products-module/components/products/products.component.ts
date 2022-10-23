@@ -1,24 +1,27 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription, tap } from 'rxjs';
 import { ProductModel } from '@products-module/models/product.model';
 
-
-import Swal from 'sweetalert2';
 import { ProductsFacade } from '@products-module/facades/products.facade';
 import { UiFacade } from '@common-module/facades/ui-facade';
 import { AuthFacade } from '@auth-module/facades/auth.facade';
+import { ModalComponent } from '@root/app/common-module/components/modal/modal.component';
 
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
-  })
+})
 export class ProductsComponent implements OnInit, OnDestroy {
 
-  cargando:boolean = true;
-  minInventario:number = 50;
-  orden1:string = '-';
-  orden2:string = '-';
+  @ViewChild('modal') modal!: ModalComponent;
+
+  private currentProduct!: ProductModel | null;
+
+  cargando: boolean = true;
+  minInventario: number = 50;
+  orden1: string = '-';
+  orden2: string = '-';
   products: ProductModel[] = [];
   uid: string | null = null;
   search: string = '';
@@ -27,10 +30,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
 
   constructor(
-    public authFacade:AuthFacade, 
+    public authFacade: AuthFacade,
     private uiFacade: UiFacade,
-    private productFacade:ProductsFacade
-  ) { 
+    private productFacade: ProductsFacade
+  ) {
   }
 
   ngOnInit(): void {
@@ -40,11 +43,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
         tap(resp => {
           if (resp) this.uid = resp.uid;
           else this.uid = null;
-          this.uiFacade.getLoading().subscribe( resp => {
-            if(!resp && this.uid) {
+          this.uiFacade.getLoading().subscribe(resp => {
+            if (!resp && this.uid) {
               this.subs.push(
                 this.productFacade.getAllProducts(this.uid).pipe(
-                  tap( resp => {
+                  tap(resp => {
                     this.cargando = false;
                     this.products = resp;
                   })
@@ -56,48 +59,55 @@ export class ProductsComponent implements OnInit, OnDestroy {
       ).subscribe()
     )
 
-    
-    
+
+
   }
 
   ngOnDestroy(): void {
-    
-    this.subs.map( x => x.unsubscribe() )
+
+    this.subs.forEach(x => x.unsubscribe())
     this.subs = [];
   }
 
-  deleteProduct( item: ProductModel ){
-    Swal.fire({
+  showModalConfirm(item: ProductModel) {
+    this.modal.showConfirm({
       title: 'Esta seguro?',
-      text: `Esta seguro que desea borrar el producto ${item.name}`,
+      message: `Esta seguro que desea borrar el producto ${item.name}`,
       icon: 'question',
       showConfirmButton: true,
       showCancelButton: true,
-    }).then( resp => {
-      if( resp.value ){
-        if(item.uid && this.uid)
-        this.productFacade.deleteProduct(this.uid, item.uid)
-          .then( resp => Swal.fire('Registro borrado', 'Registro borrado correctamente', 'success'))
-          .catch( err => Swal.fire('Oppss...', err.message, 'error'))
-      }
     })
+    this.currentProduct = item;
+  }
+
+  deleteProd(e: boolean) {
+    if (e && !!this.currentProduct) {
+      const item: ProductModel = this.currentProduct;
+      if (item.uid && this.uid) {
+        this.productFacade.deleteProduct(this.uid, item.uid)
+          .then(resp => this.modal.showModal('Registro borrado', 'Registro borrado correctamente'))
+          .catch(err => this.modal.showModal('Oppss...', err.message))
+      }
+    } else {
+      this.currentProduct = null;
+    }
   }
 
 
-  ordenar(col: string ){
-    let ordenados:any[] = this.products.slice();
-    if(this.orden1 === '^'){
-      ordenados.sort( (a, b ) => {
-        if( a[col] > b[col] ) return -1;
-        if( a[col] < b[col] ) return 1;
+  ordenar(col: string) {
+    let ordenados: any[] = this.products.slice();
+    if (this.orden1 === '^') {
+      ordenados.sort((a, b) => {
+        if (a[col] > b[col]) return -1;
+        if (a[col] < b[col]) return 1;
         return 0
       })
       this.orden1 = 'v';
     }
-    else{
-      ordenados.sort( (a, b ) => {
-        if( a[col] > b[col] ) return 1;
-        if( a[col] < b[col] ) return -1;
+    else {
+      ordenados.sort((a, b) => {
+        if (a[col] > b[col]) return 1;
+        if (a[col] < b[col]) return -1;
         return 0
       })
       this.orden1 = '^';
@@ -105,17 +115,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.orden2 = '-';
     this.products = ordenados;
   }
-  
-  ordenarNombre(col: string ){
-    let ordenados:any[] = this.products.slice();
-    if(this.orden2 === '^'){
-      ordenados.sort( (a, b ) => {
+
+  ordenarNombre(col: string) {
+    let ordenados: any[] = this.products.slice();
+    if (this.orden2 === '^') {
+      ordenados.sort((a, b) => {
         return b[col].localeCompare(a[col])
       })
       this.orden2 = 'v';
     }
-    else{
-      ordenados.sort( (a, b ) => {
+    else {
+      ordenados.sort((a, b) => {
         return a[col].localeCompare(b[col])
       })
       this.orden2 = '^';

@@ -63,24 +63,8 @@
                 <span class="">Esperate un momentico...</span>
             </div>
         </div>
-        
-        
-        <div *ngIf="showNotification" class="alert-screen">
-            <div class="alert-window">
-                <div class="alert-title">
-                    {{ notification?.title }}
-                </div>
-                <div class="alert-body">
-                    {{ notification?.message }}
-                </div>
-                <div class="alert-footer">
-                    {{ notification?.footer }}
-                </div>
-                <div class="alert-buttons">
-                    <input type="button" value="Ok" (click)="showNotification = false">
-                </div>
-            </div>
-        </div>
+
+        <cc-modal #modal></cc-modal>
     
     </section>
 </main>

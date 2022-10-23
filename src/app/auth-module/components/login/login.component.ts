@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription, tap } from 'rxjs';
 import { UiFacade } from '@common-module/facades/ui-facade';
 import { AuthFacade } from '@auth-module/facades/auth.facade';
-import Swal from 'sweetalert2';
+import { ModalComponent } from '@root/app/common-module/components/modal/modal.component';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +12,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+
+  @ViewChild('modal') modal!: ModalComponent;
 
   loginForm: FormGroup;
   isLoading: boolean = false;
@@ -52,7 +54,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         if (resp) this.router.navigate(['/products'])
       })
       .catch((err) => {
-        Swal.fire('Opps!!!', err.message, 'error')
+        this.modal.showModal('Opps!!!', err.message)
       })
   }
 

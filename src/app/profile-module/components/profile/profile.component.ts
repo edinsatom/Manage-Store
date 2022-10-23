@@ -1,15 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subscription, tap } from 'rxjs';
 import { FireUser, UserModel } from '@common-module/models/user.model';
 import { FileModel, ProductFile } from '@products-module/models/file.model';
 import { ProfileFacade } from '@profile-module/facades/profile.facade';
-
-
-interface alert {
-  title?: string;
-  message?: string;
-  footer?: string;
-}
+import { ModalComponent } from '@root/app/common-module/components/modal/modal.component';
 
 
 @Component({
@@ -19,6 +13,8 @@ interface alert {
 })
 export class ProfileComponent implements OnInit, OnDestroy {
 
+  @ViewChild('modal') modal!: ModalComponent;
+
   file: FileModel | undefined;
   user: FireUser | undefined;
   loading: boolean = false;
@@ -27,8 +23,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   name: string | undefined
 
-  notification: alert | null = null;
-  showNotification: boolean = false;
 
   private subs: Subscription = new Subscription()
 
@@ -83,17 +77,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
         this.updateProfileUrlImage(relativePath);
 
-        this.notification = {
-          title: 'Exito!!!',
-          message: 'La imagen se guardo con exito!'
-        }
-
-        this.showNotification = true;
+        this.modal.showModal('Exito!!!', 'La imagen se guardó con éxito');
 
       } catch (error:any) {
         console.log(error.message);
       }
-
       
     }
   }

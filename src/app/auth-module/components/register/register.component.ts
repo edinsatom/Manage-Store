@@ -1,13 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import Swal from 'sweetalert2'
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators'
 import { UiFacade } from '@common-module/facades/ui-facade';
 import { AuthFacade } from '@auth-module/facades/auth.facade';
 import { IUserModel } from '@common-module/models/user.model';
+import { ModalComponent } from '@root/app/common-module/components/modal/modal.component';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +15,8 @@ import { IUserModel } from '@common-module/models/user.model';
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
+
+  @ViewChild('modal') modal!: ModalComponent;
 
   registerForm: FormGroup;
   isLoading: boolean = false;
@@ -58,7 +60,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
         this.router.navigate(['products']);
       }
     } catch (error) {
-      Swal.fire('Oppss!', 'Ha ocurrido un error', 'error')
+      this.modal.showModal('Oppss!', 'Ha ocurrido un error')
     }
     
   }

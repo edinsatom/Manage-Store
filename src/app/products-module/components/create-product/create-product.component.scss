@@ -137,7 +137,7 @@ textarea {
 
 .area-buttons {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     width: 90%;
     
     gap: 20px;
@@ -230,10 +230,6 @@ textarea {
 .alert-window .alert-body {
     margin: 4rem 0;
     font-size: 1.6rem;
-}
-
-.alert-window .alert-footer {
-
 }
 
 .alert-window .alert-buttons > input[type='button'] {
